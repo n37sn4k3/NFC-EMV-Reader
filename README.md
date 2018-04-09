@@ -55,5 +55,8 @@
          android:required="true" />
 </manifest>
 
+## APK
+Unreleased, In Development
+
 ## License
 This project is released under the The GNU General Public License v3.0. See "LICENSE" file for further information.
