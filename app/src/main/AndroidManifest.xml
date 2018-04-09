@@ -13,9 +13,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!-- <uses-feature -->
-    <!-- android:name="android.hardware.nfc" -->
-    <!-- android:required="true" /> -->
+     <uses-feature
+         android:name="android.hardware.nfc"
+         android:required="true" />
+
     <application
         android:name=".application.MainApplication"
         android:allowBackup="false"
