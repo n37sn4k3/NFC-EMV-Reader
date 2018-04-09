@@ -15,7 +15,7 @@
 
 ## Device Requirements
 * Android 4.4+ (API 19+)
-* NFC hadrware (Manifest required)
+* NFC hadrware feature (Manifest required)
 * NFC feature (for "Paycard read" feature)
 * HCE feature (for "Paycard host (emulation)" feature)
 
