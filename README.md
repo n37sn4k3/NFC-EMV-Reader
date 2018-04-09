@@ -27,5 +27,33 @@
 * Realm Mobile Database Version: 5.0.0
 * IDE used for development: Android Studio (recommended)
 
+## Manifest permission(s)
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.viliyantrbr.nfcemvpayer"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Not used, declarated only -->
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Not used, declarated only -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- Not used, declarated only -->
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Not used, declarated only -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Not used, declarated only -->
+</manifest>
+
+## Manifest feature(s)
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.viliyantrbr.nfcemvpayer"
+    android:installLocation="internalOnly">
+
+    <uses-feature
+         android:name="android.hardware.nfc"
+         android:required="true" />
+</manifest>
+
 ## License
 This project is released under the The GNU General Public License v3.0. See "LICENSE" file for further information.
