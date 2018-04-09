@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.viliyantrbr.nfcemvpayer.activity.PaycardActivity">
+
+    <item
+        android:id="@+id/action_paycard_host"
+        android:orderInCategory="100"
+        android:title="@string/action_paycard_host"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_paycard_snip"
+        android:orderInCategory="100"
+        android:title="@string/action_paycard_wipe"
+        app:showAsAction="never" />
+
+</menu>

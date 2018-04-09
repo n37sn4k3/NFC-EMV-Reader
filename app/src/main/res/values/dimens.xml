@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--&lt;!&ndash; Default screen margins, per the Android Design guidelines. &ndash;&gt;-->
+    <!--<dimen name="activity_margin">16dp</dimen>-->
+    <!---->
+    <!--<dimen name="activity_horizontal_margin">@dimen/activity_margin</dimen>-->
+    <!--<dimen name="activity_vertical_margin">@dimen/activity_margin</dimen>-->
+    <!--&lt;!&ndash; - Default screen margins, per the Android Design guidelines. &ndash;&gt;-->
+
+    <!--&lt;!&ndash; Additional screen margins. &ndash;&gt;-->
+    <!--<dimen name="activity_margin_double">32dp</dimen>-->
+    <!--<dimen name="activity_horizontal_margin_double">32dp</dimen>-->
+    <!--<dimen name="activity_vertical_margin_double">32dp</dimen>-->
+
+    <!--<dimen name="activity_margin_halve">8dp</dimen>-->
+    <!--<dimen name="activity_horizontal_margin_halve">8dp</dimen>-->
+    <!--<dimen name="activity_vertical_margin_halve">8dp</dimen>-->
+    <!--&lt;!&ndash; - Additional screen margins. &ndash;&gt;-->
+
+    <dimen name="activity_margin">10dp</dimen>
+
+    <dimen name="activity_horizontal_margin">@dimen/activity_margin</dimen>
+    <dimen name="activity_vertical_margin">@dimen/activity_margin</dimen>
+
+    <dimen name="activity_margin_double">20dp</dimen>
+    <dimen name="activity_horizontal_margin_double">20dp</dimen>
+    <dimen name="activity_vertical_margin_double">20dp</dimen>
+
+    <dimen name="activity_margin_halve">5dp</dimen>
+    <dimen name="activity_horizontal_margin_halve">5dp</dimen>
+    <dimen name="activity_vertical_margin_halve">5dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="app_bar_height_scrolling_activity">180dp</dimen>
+</resources>
