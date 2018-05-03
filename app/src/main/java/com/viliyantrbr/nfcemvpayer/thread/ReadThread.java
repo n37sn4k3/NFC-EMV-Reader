@@ -5,6 +5,7 @@ import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 
+import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardConstsHelper;
 import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardHelper;
 import com.viliyantrbr.nfcemvpayer.object.AflObject;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
@@ -224,17 +225,17 @@ public class ReadThread implements Runnable {
                 } else {
                     int i = 0, resultSize;
 
-                    byte[] aidTlvTagLength = new byte[ReadPaycardHelper.AID_TLV_TAG.length];
+                    byte[] aidTlvTagLength = new byte[ReadPaycardConstsHelper.AID_TLV_TAG.length];
                     // let aidTlvTagLength: ByteArray? = ByteArray(aidTlvTag.length) // Kotlin
 
                     while (byteArrayInputStream.read() != -1) {
                         i += 1;
 
-                        if (i >= ReadPaycardHelper.AID_TLV_TAG.length) {
-                            aidTlvTagLength = Arrays.copyOfRange(rPse, i - ReadPaycardHelper.AID_TLV_TAG.length, i);
+                        if (i >= ReadPaycardConstsHelper.AID_TLV_TAG.length) {
+                            aidTlvTagLength = Arrays.copyOfRange(rPse, i - ReadPaycardConstsHelper.AID_TLV_TAG.length, i);
                         }
 
-                        if (Arrays.equals(ReadPaycardHelper.AID_TLV_TAG, aidTlvTagLength)) {
+                        if (Arrays.equals(ReadPaycardConstsHelper.AID_TLV_TAG, aidTlvTagLength)) {
                             resultSize = byteArrayInputStream.read();
 
                             if (resultSize > byteArrayInputStream.available()) {
@@ -312,17 +313,17 @@ public class ReadThread implements Runnable {
                 } else {
                     int i = 0, resultSize;
 
-                    byte[] aidTlvTagLength = new byte[ReadPaycardHelper.AID_TLV_TAG.length];
+                    byte[] aidTlvTagLength = new byte[ReadPaycardConstsHelper.AID_TLV_TAG.length];
                     // let aidTlvTagLength: ByteArray? = ByteArray(aidTlvTag.length) // Kotlin
 
                     while (byteArrayInputStream.read() != -1) {
                         i += 1;
 
-                        if (i >= ReadPaycardHelper.AID_TLV_TAG.length) {
-                            aidTlvTagLength = Arrays.copyOfRange(rPpse, i - ReadPaycardHelper.AID_TLV_TAG.length, i);
+                        if (i >= ReadPaycardConstsHelper.AID_TLV_TAG.length) {
+                            aidTlvTagLength = Arrays.copyOfRange(rPpse, i - ReadPaycardConstsHelper.AID_TLV_TAG.length, i);
                         }
 
-                        if (Arrays.equals(ReadPaycardHelper.AID_TLV_TAG, aidTlvTagLength)) {
+                        if (Arrays.equals(ReadPaycardConstsHelper.AID_TLV_TAG, aidTlvTagLength)) {
                             resultSize = byteArrayInputStream.read();
 
                             if (resultSize > byteArrayInputStream.available()) {
@@ -487,7 +488,7 @@ public class ReadThread implements Runnable {
 
         // Application Label
         if (applicationLabel == null) {
-            applicationLabel = new TlvUtil().getTlvValue(rFci, ReadPaycardHelper.APPLICATION_LABEL_TLV_TAG);
+            applicationLabel = new TlvUtil().getTlvValue(rFci, ReadPaycardConstsHelper.APPLICATION_LABEL_TLV_TAG);
 
             if (applicationLabel != null) {
                 LogUtil.d(TAG, "EMV (TLV) - Data: \"Application Label [50]\": " + Arrays.toString(applicationLabel));
@@ -505,9 +506,9 @@ public class ReadThread implements Runnable {
         // - Application Label
 
         // PDOL (Processing Options Data Object List)
-        byte[] pdol = null, tempPdol = new TlvUtil().getTlvValue(rFci, ReadPaycardHelper.PDOL_TLV_TAG);
+        byte[] pdol = null, tempPdol = new TlvUtil().getTlvValue(rFci, ReadPaycardConstsHelper.PDOL_TLV_TAG);
 
-        if (tempPdol != null && DolUtil.isValidDol(tempPdol, ReadPaycardHelper.PDOL_TLV_TAG)) {
+        if (tempPdol != null && DolUtil.isValidDol(tempPdol, ReadPaycardConstsHelper.PDOL_TLV_TAG)) {
             pdol = tempPdol;
 
             LogUtil.d(TAG, "EMV (TLV) - Data: \"PDOL (Processing Options Data Object List) [9F38]\": " + Arrays.toString(pdol));
@@ -583,7 +584,7 @@ public class ReadThread implements Runnable {
         if (isPayWave) {
             // Application PAN (Primary Account Number)
             if (applicationPan == null) {
-                applicationPan = new TlvUtil().getTlvValue(rGpo, ReadPaycardHelper.APPLICATION_PAN_TLV_TAG);
+                applicationPan = new TlvUtil().getTlvValue(rGpo, ReadPaycardConstsHelper.APPLICATION_PAN_TLV_TAG);
 
                 if (applicationPan != null) {
                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Application PAN (Primary Account Number) [5A]\": " + Arrays.toString(applicationPan));
@@ -598,7 +599,7 @@ public class ReadThread implements Runnable {
 
             // Cardholder Name
             if (cardholderName == null) {
-                cardholderName = new TlvUtil().getTlvValue(rGpo, ReadPaycardHelper.CARDHOLDER_NAME_TLV_TAG);
+                cardholderName = new TlvUtil().getTlvValue(rGpo, ReadPaycardConstsHelper.CARDHOLDER_NAME_TLV_TAG);
 
                 if (cardholderName != null) {
                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Cardholder Name [5F20]\": " + Arrays.toString(cardholderName));
@@ -617,7 +618,7 @@ public class ReadThread implements Runnable {
 
             // Application Expiration Date
             if (applicationExpirationDate == null) {
-                applicationExpirationDate = new TlvUtil().getTlvValue(rGpo, ReadPaycardHelper.APPLICATION_EXPIRATION_DATE_TLV_TAG);
+                applicationExpirationDate = new TlvUtil().getTlvValue(rGpo, ReadPaycardConstsHelper.APPLICATION_EXPIRATION_DATE_TLV_TAG);
 
                 if (applicationExpirationDate != null) {
                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Application Expiration Date [5F24]\": " + Arrays.toString(applicationExpirationDate));
@@ -636,7 +637,7 @@ public class ReadThread implements Runnable {
         byte[] aflData = null;
 
         // Response message template 1 (without tags and lengths)
-        if (rGpo[0] == ReadPaycardHelper.GPO_RMT1_TLV_TAG[0]) {
+        if (rGpo[0] == ReadPaycardConstsHelper.GPO_RMT1_TLV_TAG[0]) {
             LogUtil.d(TAG, "GPO Response message template 1");
 
             byte[] gpoData80 = null;
@@ -644,18 +645,18 @@ public class ReadThread implements Runnable {
         // - Response message 1 (without tags and lengths)
 
         // Response message template 2 (with tags and lengths)
-        if (rGpo[0] == ReadPaycardHelper.GPO_RMT2_TLV_TAG[0]) {
+        if (rGpo[0] == ReadPaycardConstsHelper.GPO_RMT2_TLV_TAG[0]) {
             LogUtil.d(TAG, "GPO Response message template 2");
 
             byte[] gpoData77 = null;
 
-            gpoData77 = new TlvUtil().getTlvValue(rGpo, ReadPaycardHelper.GPO_RMT2_TLV_TAG);
+            gpoData77 = new TlvUtil().getTlvValue(rGpo, ReadPaycardConstsHelper.GPO_RMT2_TLV_TAG);
 
             if (gpoData77 != null) {
                 // AFL_TLV_TAG (Application File Locator)
                 byte[] afl; // TLV (Type-length-value) tag specified for AFL_TLV_TAG (Application File Locator) and result variable
 
-                afl = new TlvUtil().getTlvValue(rGpo, ReadPaycardHelper.AFL_TLV_TAG);
+                afl = new TlvUtil().getTlvValue(rGpo, ReadPaycardConstsHelper.AFL_TLV_TAG);
 
                 if (afl != null) {
                     aflData = afl;
@@ -746,25 +747,25 @@ public class ReadThread implements Runnable {
 
                             // CDOL1 (Card Risk Management Data Object List 1)
                             if (cdol_1 == null) {
-                                byte[] tempCdol1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.CDOL_1_TLV_TAG);
+                                byte[] tempCdol1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.CDOL_1_TLV_TAG);
 
-                                if (tempCdol1 != null && DolUtil.isValidDol(tempCdol1, ReadPaycardHelper.CDOL_1_TLV_TAG))
+                                if (tempCdol1 != null && DolUtil.isValidDol(tempCdol1, ReadPaycardConstsHelper.CDOL_1_TLV_TAG))
                                     cdol_1 = tempCdol1;
                             }
                             // - CDOL1 (Card Risk Management Data Object List 1)
 
                             // CDOL2 (Card Risk Management Data Object List 2)
                             if (cdol_2 == null) {
-                                byte[] tempCdol2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.CDOL_2_TLV_TAG);
+                                byte[] tempCdol2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.CDOL_2_TLV_TAG);
 
-                                if (tempCdol2 != null && DolUtil.isValidDol(tempCdol2, ReadPaycardHelper.CDOL_2_TLV_TAG))
+                                if (tempCdol2 != null && DolUtil.isValidDol(tempCdol2, ReadPaycardConstsHelper.CDOL_2_TLV_TAG))
                                     cdol_2 = tempCdol2;
                             }
                             // - CDOL2 (Card Risk Management Data Object List 2)
 
                             // Application PAN (Primary Account Number)
                             if (applicationPan == null) {
-                                applicationPan = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.APPLICATION_PAN_TLV_TAG);
+                                applicationPan = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.APPLICATION_PAN_TLV_TAG);
 
                                 if (applicationPan != null) {
                                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Application PAN (Primary Account Number) [5A]\": " + Arrays.toString(applicationPan));
@@ -779,7 +780,7 @@ public class ReadThread implements Runnable {
 
                             // Cardholder Name
                             if (cardholderName == null) {
-                                cardholderName = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.CARDHOLDER_NAME_TLV_TAG);
+                                cardholderName = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.CARDHOLDER_NAME_TLV_TAG);
 
                                 if (cardholderName != null) {
                                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Cardholder Name [5F20]\": " + Arrays.toString(cardholderName));
@@ -798,7 +799,7 @@ public class ReadThread implements Runnable {
 
                             // Application Expiration Date
                             if (applicationExpirationDate == null) {
-                                applicationExpirationDate = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.APPLICATION_EXPIRATION_DATE_TLV_TAG);
+                                applicationExpirationDate = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.APPLICATION_EXPIRATION_DATE_TLV_TAG);
 
                                 if (applicationExpirationDate != null) {
                                     LogUtil.d(TAG, "EMV (TLV) - Data: \"Application Expiration Date [5F24]\": " + Arrays.toString(applicationExpirationDate));
@@ -814,11 +815,11 @@ public class ReadThread implements Runnable {
                             // PayPass
                             if (isPayPass) {
                                 // Without CVM; Signature; Offline -> Proceed with UNs
-                                byte[] pUnAtcTrack1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.P_UN_ATC_TRACK1_TLV_TAG);
-                                byte[] nAtcTrack1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.N_ATC_TRACK1_TLV_TAG);
+                                byte[] pUnAtcTrack1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.P_UN_ATC_TRACK1_TLV_TAG);
+                                byte[] nAtcTrack1 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.N_ATC_TRACK1_TLV_TAG);
 
-                                byte[] pUnAtcTrack2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.P_UN_ATC_TRACK2_TLV_TAG);
-                                byte[] nAtcTrack2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardHelper.N_ATC_TRACK2_TLV_TAG);
+                                byte[] pUnAtcTrack2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.P_UN_ATC_TRACK2_TLV_TAG);
+                                byte[] nAtcTrack2 = new TlvUtil().getTlvValue(rReadRecord, ReadPaycardConstsHelper.N_ATC_TRACK2_TLV_TAG);
 
                                 if (pUnAtcTrack1 != null && nAtcTrack1 != null && pUnAtcTrack2 != null && nAtcTrack2 != null) {
                                     int kTrack1 = 0, tTrack1 = nAtcTrack1[0];
@@ -941,7 +942,7 @@ public class ReadThread implements Runnable {
         }
         // - Read AFL (Application File Locator) Record(s)
 
-        /*// Last Online ATC (Application Transaction Counter) Register
+        // Last Online ATC (Application Transaction Counter) Register
         byte[] cLastOnlineAtcRegister = null, rLastOnlineAtcRegister = null; // C-APDU & R-APDU
 
         ByteArrayOutputStream lastOnlineAtcRegisterByteArrayOutputStream = null;
@@ -956,9 +957,9 @@ public class ReadThread implements Runnable {
 
         if (lastOnlineAtcRegisterByteArrayOutputStream != null) {
             try {
-                lastOnlineAtcRegisterByteArrayOutputStream.write(ReadPaycardHelper.GET_DATA); // Cla, Ins
+                lastOnlineAtcRegisterByteArrayOutputStream.write(ReadPaycardConstsHelper.GET_DATA); // Cla, Ins
 
-                lastOnlineAtcRegisterByteArrayOutputStream.write(ReadPaycardHelper.LAST_ONLINE_ATC_REGISTER_TLV_TAG); // P1, P2
+                lastOnlineAtcRegisterByteArrayOutputStream.write(ReadPaycardConstsHelper.LAST_ONLINE_ATC_REGISTER_TLV_TAG); // P1, P2
 
                 lastOnlineAtcRegisterByteArrayOutputStream.write(new byte[]{
                         (byte) 0x00 // Le
@@ -1022,9 +1023,9 @@ public class ReadThread implements Runnable {
 
         if (pinTryCounterByteArrayOutputStream != null) {
             try {
-                pinTryCounterByteArrayOutputStream.write(ReadPaycardHelper.GET_DATA); // Cla, Ins
+                pinTryCounterByteArrayOutputStream.write(ReadPaycardConstsHelper.GET_DATA); // Cla, Ins
 
-                pinTryCounterByteArrayOutputStream.write(ReadPaycardHelper.PIN_TRY_COUNTER_TLV_TAG); // P1, P2
+                pinTryCounterByteArrayOutputStream.write(ReadPaycardConstsHelper.PIN_TRY_COUNTER_TLV_TAG); // P1, P2
 
                 pinTryCounterByteArrayOutputStream.write(new byte[]{
                         (byte) 0x00 // Le
@@ -1088,9 +1089,9 @@ public class ReadThread implements Runnable {
 
         if (atcByteArrayOutputStream != null) {
             try {
-                atcByteArrayOutputStream.write(ReadPaycardHelper.GET_DATA); // Cla, Ins
+                atcByteArrayOutputStream.write(ReadPaycardConstsHelper.GET_DATA); // Cla, Ins
 
-                atcByteArrayOutputStream.write(ReadPaycardHelper.ATC_TLV_TAG); // P1, P2
+                atcByteArrayOutputStream.write(ReadPaycardConstsHelper.ATC_TLV_TAG); // P1, P2
 
                 atcByteArrayOutputStream.write(new byte[]{
                         (byte) 0x00 // Le
@@ -1137,15 +1138,15 @@ public class ReadThread implements Runnable {
                 // TODO: Get response SW1 & SW2, check response SW1 & SW2, log the result
             }
         }
-        // - ATC (Application Transaction Counter)*/
+        // - ATC (Application Transaction Counter)
 
         // Log Entry
         byte[] logEntry = null;
 
         if (isPayPass)
-            logEntry = new TlvUtil().getTlvValue(rFci, ReadPaycardHelper.PAYPASS_LOG_ENTRY_TLV_TAG);
+            logEntry = new TlvUtil().getTlvValue(rFci, ReadPaycardConstsHelper.PAYPASS_LOG_ENTRY_TLV_TAG);
         else if (isPayWave)
-            logEntry = new TlvUtil().getTlvValue(rFci, ReadPaycardHelper.PAYWAVE_LOG_ENTRY_TLV_TAG);
+            logEntry = new TlvUtil().getTlvValue(rFci, ReadPaycardConstsHelper.PAYWAVE_LOG_ENTRY_TLV_TAG);
 
         if (logEntry != null) {
             if (isPayPass) {
@@ -1177,12 +1178,12 @@ public class ReadThread implements Runnable {
 
             if (logFormatByteArrayOutputStream != null) {
                 try {
-                    logFormatByteArrayOutputStream.write(ReadPaycardHelper.GET_DATA); // Cla, Ins
+                    logFormatByteArrayOutputStream.write(ReadPaycardConstsHelper.GET_DATA); // Cla, Ins
 
                     if (isPayPass)
-                        logFormatByteArrayOutputStream.write(ReadPaycardHelper.PAYPASS_LOG_FORMAT_TLV_TAG); // P1, P2
+                        logFormatByteArrayOutputStream.write(ReadPaycardConstsHelper.PAYPASS_LOG_FORMAT_TLV_TAG); // P1, P2
                     else if (isPayWave)
-                        logFormatByteArrayOutputStream.write(ReadPaycardHelper.PAYWAVE_LOG_FORMAT_TLV_TAG); // P1, P2
+                        logFormatByteArrayOutputStream.write(ReadPaycardConstsHelper.PAYWAVE_LOG_FORMAT_TLV_TAG); // P1, P2
 
                     logFormatByteArrayOutputStream.write(new byte[]{
                             (byte) 0x00 // Le
@@ -1249,7 +1250,7 @@ public class ReadThread implements Runnable {
 
                     if (logEntryReadRecordByteArrayOutputStream != null) {
                         try {
-                            logEntryReadRecordByteArrayOutputStream.write(ReadPaycardHelper.READ_RECORD); // Cla, Ins
+                            logEntryReadRecordByteArrayOutputStream.write(ReadPaycardConstsHelper.READ_RECORD); // Cla, Ins
 
                             logEntryReadRecordByteArrayOutputStream.write(new byte[]{
                                     (byte) i,
@@ -1464,9 +1465,9 @@ public class ReadThread implements Runnable {
                     // TLV extracted data
                     paycardObject.setAid(finalAid);
 
-                    paycardObject.setApplicationPan(finalApplicationPan);
+                    paycardObject.setPan(finalApplicationPan);
                     paycardObject.setCardholderName(finalCardholderName);
-                    paycardObject.setApplicationExpirationDate(finalApplicationExpirationDate);
+                    paycardObject.setExpirationDate(finalApplicationExpirationDate);
                     // - TLV extracted data
 
                     // Additional data
