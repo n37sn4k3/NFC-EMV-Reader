@@ -32,7 +32,7 @@
 * Realm Mobile Database Version: 5.0.0
 * IDE used for development: Android Studio (recommended)
 
-## Manifest permission(s)
+## Manifest permission(s) / Also runtime requested /
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.viliyantrbr.nfcemvpayer"
@@ -47,6 +47,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Not used, declarated only -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Not used, declarated only -->
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>
 
 ## Manifest feature(s)
