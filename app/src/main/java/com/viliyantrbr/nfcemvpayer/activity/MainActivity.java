@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
             runtimePermissions.add(Manifest.permission.ACCESS_WIFI_STATE);
             runtimePermissions.add(Manifest.permission.CHANGE_WIFI_STATE);
 
+            runtimePermissions.add(Manifest.permission.VIBRATE);
+
             if (!runtimePermissions.isEmpty()) {
                 ArrayList<String> requestRuntimePermissions = new ArrayList<>();
 

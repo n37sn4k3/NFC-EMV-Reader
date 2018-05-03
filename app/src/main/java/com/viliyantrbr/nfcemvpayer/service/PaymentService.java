@@ -2,6 +2,7 @@ package com.viliyantrbr.nfcemvpayer.service;
 
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
@@ -14,6 +15,8 @@ import java.util.Arrays;
 public class PaymentService extends HostApduService {
     private static final String TAG = PaymentService.class.getSimpleName();
 
+    private Vibrator mVibrator = null;
+
     private PaycardObject mPaycardObject;
 
     public PaymentService(@NonNull PaycardObject paycardObject) {
@@ -24,12 +27,36 @@ public class PaymentService extends HostApduService {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG, "\"" + TAG + "\": Service create");
+
+        try {
+            mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Service destroy");
+
+        if (mVibrator != null) {
+            if (mVibrator.hasVibrator()) {
+                try {
+                    mVibrator.cancel();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
+            }
+
+            mVibrator = null;
+        }
     }
 
     @Override
@@ -62,8 +89,6 @@ public class PaymentService extends HostApduService {
 
     @Override
     public void onDeactivated(int reason) {
-        LogUtil.d(TAG, "\"" + TAG + "\": Service deactivated");
-
         try {
             stopSelf();
         } catch (Exception e) {
