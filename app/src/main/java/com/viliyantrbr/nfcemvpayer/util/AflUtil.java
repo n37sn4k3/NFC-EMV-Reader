@@ -3,7 +3,7 @@ package com.viliyantrbr.nfcemvpayer.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardHelper;
+import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardConstsHelper;
 import com.viliyantrbr.nfcemvpayer.object.AflObject;
 
 import java.io.ByteArrayOutputStream;
@@ -54,7 +54,7 @@ public class AflUtil {
 
                     if (readRecordByteArrayOutputStream != null) {
                         try {
-                            readRecordByteArrayOutputStream.write(ReadPaycardHelper.READ_RECORD);
+                            readRecordByteArrayOutputStream.write(ReadPaycardConstsHelper.READ_RECORD);
 
                             readRecordByteArrayOutputStream.write(new byte[]{
                                     (byte) aflObject.getRecordNumber(),

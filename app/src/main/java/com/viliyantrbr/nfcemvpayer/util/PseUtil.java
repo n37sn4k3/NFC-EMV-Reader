@@ -2,7 +2,7 @@ package com.viliyantrbr.nfcemvpayer.util;
 
 import android.support.annotation.Nullable;
 
-import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardHelper;
+import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardConstsHelper;
 
 import java.io.ByteArrayOutputStream;
 
@@ -31,7 +31,7 @@ public class PseUtil {
 
         if (pseByteArrayOutputStream != null) {
             try {
-                pseByteArrayOutputStream.write(ReadPaycardHelper.SELECT); // Cla, Ins
+                pseByteArrayOutputStream.write(ReadPaycardConstsHelper.SELECT); // Cla, Ins
 
                 pseByteArrayOutputStream.write(new byte[]{
                         (byte) 0x04, // P1
@@ -90,7 +90,7 @@ public class PseUtil {
 
         if (ppseByteArrayOutputStream != null) {
             try {
-                ppseByteArrayOutputStream.write(ReadPaycardHelper.SELECT); // Cla, Ins
+                ppseByteArrayOutputStream.write(ReadPaycardConstsHelper.SELECT); // Cla, Ins
 
                 ppseByteArrayOutputStream.write(new byte[]{
                         (byte) 0x04, // P1

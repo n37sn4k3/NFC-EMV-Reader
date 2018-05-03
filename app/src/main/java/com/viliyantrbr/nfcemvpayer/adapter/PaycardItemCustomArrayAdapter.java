@@ -55,7 +55,7 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), PaycardActivity.class);
                     if (paycardObject != null) {
-                        intent.putExtra("Pan", paycardObject.getApplicationPan());
+                        intent.putExtra("Pan", paycardObject.getPan());
                     }
 
                     view.getContext().startActivity(intent);
@@ -69,7 +69,7 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
         if (paycardObject != null) {
             // PAN
-            String panString = HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan());
+            String panString = HexUtil.bytesToHexadecimal(paycardObject.getPan());
 
             viewHolder.paycardPanTextView.setText(panString != null ? panString : "N/A");
             // - PAN
@@ -113,7 +113,7 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
             Date expDate = null;
             try {
-                expDate = new SimpleDateFormat("yyMMdd", Locale.getDefault()).parse(HexUtil.bytesToHexadecimal(paycardObject.getApplicationExpirationDate()));
+                expDate = new SimpleDateFormat("yyMMdd", Locale.getDefault()).parse(HexUtil.bytesToHexadecimal(paycardObject.getExpirationDate()));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 System.out.println(e.toString());

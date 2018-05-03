@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.viliyantrbr.nfcemvpayer.R;
-import com.viliyantrbr.nfcemvpayer.thread.ReadThread;
+import com.viliyantrbr.nfcemvpayer.thread.ReadPaycardThread;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 public class ReadPaycardActivity extends AppCompatActivity {
@@ -76,7 +76,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
     private NfcAdapter.ReaderCallback mReaderCallback = new NfcAdapter.ReaderCallback() {
         @Override
         public void onTagDiscovered(Tag tag) {
-            runOnUiThread(new ReadThread(ReadPaycardActivity.this, tag));
+            runOnUiThread(new ReadPaycardThread(ReadPaycardActivity.this, tag));
         }
     };
 

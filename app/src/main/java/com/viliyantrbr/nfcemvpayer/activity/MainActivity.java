@@ -68,14 +68,18 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
 
-                if (tab.getIcon() != null) tab.getIcon().setColorFilter(tabSelectedIconColor, PorterDuff.Mode.SRC_IN);
+                if (tab.getIcon() != null) {
+                    tab.getIcon().setColorFilter(tabSelectedIconColor, PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 super.onTabUnselected(tab);
 
-                if (tab.getIcon() != null) tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                if (tab.getIcon() != null) {
+                    tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
@@ -126,10 +130,14 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> requestRuntimePermissions = new ArrayList<>();
 
                 for (String aRuntimePermission : runtimePermissions) {
-                    if (checkSelfPermission(aRuntimePermission) != PackageManager.PERMISSION_GRANTED) requestRuntimePermissions.add(aRuntimePermission);
+                    if (checkSelfPermission(aRuntimePermission) != PackageManager.PERMISSION_GRANTED) {
+                        requestRuntimePermissions.add(aRuntimePermission);
+                    }
                 }
 
-                if (!requestRuntimePermissions.isEmpty()) requestPermissions(requestRuntimePermissions.toArray(new String[requestRuntimePermissions.size()]), 1);
+                if (!requestRuntimePermissions.isEmpty()) {
+                    requestPermissions(requestRuntimePermissions.toArray(new String[requestRuntimePermissions.size()]), 1);
+                }
             }
         }
         // - Runtime permission(s)

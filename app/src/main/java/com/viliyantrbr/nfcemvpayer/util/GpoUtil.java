@@ -3,7 +3,7 @@ package com.viliyantrbr.nfcemvpayer.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardHelper;
+import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardConstsHelper;
 import com.viliyantrbr.nfcemvpayer.object.TlvObject;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ public class GpoUtil {
 
         if (byteArrayOutputStream != null) {
             try {
-                byteArrayOutputStream.write(ReadPaycardHelper.GET_PROCESSING_OPTIONS); // Cla, Ins
+                byteArrayOutputStream.write(ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS); // Cla, Ins
 
                 byteArrayOutputStream.write(new byte[]{
                         (byte) 0x00, // P1
@@ -124,7 +124,7 @@ public class GpoUtil {
                         Date transactionDate = new Date();
 
                         // TTQ (Terminal Transaction Qualifiers); 9F66; 4 Byte(s)
-                        if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TTQ_TLV_TAG)) {
+                        if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TTQ_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> TTQ (Terminal Transaction Qualifiers); " + "9F66" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             byte[] data = new byte[4];
@@ -136,7 +136,7 @@ public class GpoUtil {
                         // - TTQ (Terminal Transaction Qualifiers); 9F66; 4 Byte(s)
 
                         // Amount, Authorised (Numeric); 9F02; 6 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.AMOUNT_AUTHORISED_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.AMOUNT_AUTHORISED_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Amount, Authorised (Numeric); " + "9F02" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[tlvObject.getTlvTagLength()];
@@ -153,7 +153,7 @@ public class GpoUtil {
                         // - Amount, Authorised (Numeric); 9F02; 6 Byte(s)
 
                         // Amount, Other (Numeric); 9F03; 6 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.AMOUNT_OTHER_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.AMOUNT_OTHER_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Amount, Other (Numeric); " + "9F03" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[tlvObject.getTlvTagLength()];
@@ -170,7 +170,7 @@ public class GpoUtil {
                         // - Amount, Other (Numeric); 9F03; 6 Byte(s)
 
                         // Terminal Country Code; 9F1A; 2 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TERMINAL_COUNTRY_CODE_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TERMINAL_COUNTRY_CODE_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Terminal Country Code; " + "9F1A" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[]{
@@ -185,7 +185,7 @@ public class GpoUtil {
                         // - Terminal Country Code; 9F1A; 2 Byte(s)
 
                         // Transaction Currency Code; 5F2A, 2 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Transaction Currency Code; " + "5F2A" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[]{
@@ -200,7 +200,7 @@ public class GpoUtil {
                         // - Transaction Currency Code; 5F2A, 2 Byte(s)
 
                         // TVR (Transaction Verification Results); 95; 5 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TVR_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TVR_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> TVR (Transaction Verification Results); " + "95" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[tlvObject.getTlvTagLength()];
@@ -216,7 +216,7 @@ public class GpoUtil {
                         // - TVR (Transaction Verification Results); 95; 5 Byte(s)
 
                         // Transaction Date; 9A, 3 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TRANSACTION_DATE_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TRANSACTION_DATE_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Transaction Date; " + "9A" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             // "SimpleDateFormat" Reference: https://developer.android.com/reference/java/text/SimpleDateFormat.html
@@ -247,7 +247,7 @@ public class GpoUtil {
                         // - Transaction Date; 9A, 3 Byte(s)
 
                         // Transaction Type; 9C, 1 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TRANSACTION_TYPE_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TRANSACTION_TYPE_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Transaction Type; " + "9C" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             resultValue = new byte[]{
@@ -257,7 +257,7 @@ public class GpoUtil {
                         // - Transaction Type; 9C, 1 Byte(s)
 
                         // Transaction Time; 9F21; 3 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.TRANSACTION_TIME_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.TRANSACTION_TIME_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> Transaction Date; " + "9F21" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             // "SimpleDateFormat" Reference: https://developer.android.com/reference/java/text/SimpleDateFormat.html
@@ -288,7 +288,7 @@ public class GpoUtil {
                         // - Transaction Time; 9F21; 3 Byte(s)
 
                         // UN (Unpredictable Number); 9F37, 1 or 4 Byte(s)
-                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardHelper.UN_TLV_TAG)) {
+                        else if (Arrays.equals(tlvObject.getTlvTag(), ReadPaycardConstsHelper.UN_TLV_TAG)) {
                             LogUtil.d(TAG, "Generate PDOL -> UN (Unpredictable Number); " + "9F37" + "; " + tlvObject.getTlvTagLength() + " Byte(s)");
 
                             // Generate random unpredictable number

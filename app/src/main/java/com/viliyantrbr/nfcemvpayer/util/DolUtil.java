@@ -3,7 +3,7 @@ package com.viliyantrbr.nfcemvpayer.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardHelper;
+import com.viliyantrbr.nfcemvpayer.helper.ReadPaycardConstsHelper;
 
 import java.util.Arrays;
 
@@ -11,63 +11,63 @@ public class DolUtil {
     private static final String TAG = DolUtil.class.getName();
 
     private static final byte[] TTQ = {
-            ReadPaycardHelper.TTQ_TLV_TAG[0],
-            ReadPaycardHelper.TTQ_TLV_TAG[1],
+            ReadPaycardConstsHelper.TTQ_TLV_TAG[0],
+            ReadPaycardConstsHelper.TTQ_TLV_TAG[1],
             (byte) 0x04
     }; // TTQ (Terminal Transaction Qualifiers); 2 Byte Tlv Tag with 4 Byte(s)
 
     private static final byte[] AMOUNT_AUTHORISED = {
-            ReadPaycardHelper.AMOUNT_AUTHORISED_TLV_TAG[0],
-            ReadPaycardHelper.AMOUNT_AUTHORISED_TLV_TAG[1],
+            ReadPaycardConstsHelper.AMOUNT_AUTHORISED_TLV_TAG[0],
+            ReadPaycardConstsHelper.AMOUNT_AUTHORISED_TLV_TAG[1],
             (byte) 0x06
     }; // Amount, Authorised (Numeric); 2 Byte Tlv Tag with 6 Byte(s)
 
     private static final byte[] AMOUNT_OTHER = {
-            ReadPaycardHelper.AMOUNT_OTHER_TLV_TAG[0],
-            ReadPaycardHelper.AMOUNT_OTHER_TLV_TAG[1],
+            ReadPaycardConstsHelper.AMOUNT_OTHER_TLV_TAG[0],
+            ReadPaycardConstsHelper.AMOUNT_OTHER_TLV_TAG[1],
             (byte) 0x06
     }; // Amount, Other (Numeric); 2 Byte Tlv Tag with 6 Byte(s)
 
     private static final byte[] TERMINAL_COUNTRY_CODE = {
-            ReadPaycardHelper.TERMINAL_COUNTRY_CODE_TLV_TAG[0],
-            ReadPaycardHelper.TERMINAL_COUNTRY_CODE_TLV_TAG[1],
+            ReadPaycardConstsHelper.TERMINAL_COUNTRY_CODE_TLV_TAG[0],
+            ReadPaycardConstsHelper.TERMINAL_COUNTRY_CODE_TLV_TAG[1],
             (byte) 0x02
     }; // Terminal Country Code; 2 Byte Tlv Tag with 2 Byte(s)
 
     private static final byte[] TRANSACTION_CURRENCY_CODE = {
-            ReadPaycardHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG[0],
-            ReadPaycardHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG[1],
+            ReadPaycardConstsHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG[0],
+            ReadPaycardConstsHelper.TRANSACTION_CURRENCY_CODE_TLV_TAG[1],
             (byte) 0x02
     }; // Transaction Currency Code; 2 Byte Tlv Tag with 2 Byte(s)
 
     private static final byte[] TVR = {
-            ReadPaycardHelper.TVR_TLV_TAG[0],
+            ReadPaycardConstsHelper.TVR_TLV_TAG[0],
             (byte) 0x05
     }; // TVR (Transaction Verification Results); 1 Byte Tlv Tag with 5 Byte(s)
 
     private static final byte[] TRANSACTION_DATE = {
-            ReadPaycardHelper.TRANSACTION_DATE_TLV_TAG[0],
+            ReadPaycardConstsHelper.TRANSACTION_DATE_TLV_TAG[0],
             (byte) 0x03
     }; // Transaction Date; 1 Byte Tlv Tag with 3 Byte(s)
 
     private static final byte[] TRANSACTION_TYPE = {
-            ReadPaycardHelper.TRANSACTION_TYPE_TLV_TAG[0],
+            ReadPaycardConstsHelper.TRANSACTION_TYPE_TLV_TAG[0],
             (byte) 0x01
     }; // Transaction Type; 1 Byte Tlv Tag with 1 Byte(s)
 
     private static final byte[] TRANSACTION_TIME = {
-            ReadPaycardHelper.TRANSACTION_TIME_TLV_TAG[0],
-            ReadPaycardHelper.TRANSACTION_TIME_TLV_TAG[1],
+            ReadPaycardConstsHelper.TRANSACTION_TIME_TLV_TAG[0],
+            ReadPaycardConstsHelper.TRANSACTION_TIME_TLV_TAG[1],
             (byte) 0x03
     }; // Transaction Time; 2 Byte Tlv Tag with 3 Byte(s)
 
     private static final byte[] UN_LENGTH_1 = {
-            ReadPaycardHelper.UN_TLV_TAG[0],
-            ReadPaycardHelper.UN_TLV_TAG[1],
+            ReadPaycardConstsHelper.UN_TLV_TAG[0],
+            ReadPaycardConstsHelper.UN_TLV_TAG[1],
             (byte) 0x01
     }, UN_LENGTH_4 = {
-            ReadPaycardHelper.UN_TLV_TAG[0],
-            ReadPaycardHelper.UN_TLV_TAG[1],
+            ReadPaycardConstsHelper.UN_TLV_TAG[0],
+            ReadPaycardConstsHelper.UN_TLV_TAG[1],
             (byte) 0x04
     }; // UN (Unpredictable Number); 2 Byte Tlv Tag with (1 Byte(s) / 4 Byte(s))
 
@@ -77,11 +77,11 @@ public class DolUtil {
         // - Returning result
 
         if (dol != null) {
-            if (Arrays.equals(ReadPaycardHelper.PDOL_TLV_TAG, dolTypeTlvTag)) {
+            if (Arrays.equals(ReadPaycardConstsHelper.PDOL_TLV_TAG, dolTypeTlvTag)) {
                 result = isValidPdol(dol);
-            } else if (Arrays.equals(ReadPaycardHelper.CDOL_1_TLV_TAG, dolTypeTlvTag)) {
+            } else if (Arrays.equals(ReadPaycardConstsHelper.CDOL_1_TLV_TAG, dolTypeTlvTag)) {
                 result = isValidCdol_1(dol);
-            } else if (Arrays.equals(ReadPaycardHelper.CDOL_2_TLV_TAG, dolTypeTlvTag)) {
+            } else if (Arrays.equals(ReadPaycardConstsHelper.CDOL_2_TLV_TAG, dolTypeTlvTag)) {
                 result = isValidCdol_2(dol);
             }
         }
