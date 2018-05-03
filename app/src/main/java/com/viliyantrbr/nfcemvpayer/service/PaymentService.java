@@ -65,7 +65,11 @@ public class PaymentService extends HostApduService {
 
         if (commandApdu != null) {
             LogUtil.d(TAG, "\"" + TAG + "\": Command APDU: " + Arrays.toString(commandApdu));
-            LogUtil.d(TAG, "\"" + TAG + "\": Command APDU Hexadecimal: " + HexUtil.bytesToHexadecimal(commandApdu));
+
+            String commandApduHexadecimal = HexUtil.bytesToHexadecimal(commandApdu);
+            if (commandApduHexadecimal != null) {
+                LogUtil.d(TAG, "\"" + TAG + "\": Command APDU Hexadecimal: " + commandApduHexadecimal);
+            }
 
             // PSE (Payment System Environment)
             if (Arrays.equals(commandApdu, mPaycardObject.getCPse()) && Arrays.equals(commandApdu, PseUtil.selectPse(null))) {

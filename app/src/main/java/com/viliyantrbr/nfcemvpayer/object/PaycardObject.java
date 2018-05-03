@@ -20,9 +20,9 @@ public class PaycardObject extends RealmObject {
     // ----
 
     private byte[] mApplicationLabel = null;
-    private byte[] mPan = null;
+    private byte[] mApplicationPan = null;
     private byte[] mCardholderName = null;
-    private byte[] mExpirationDate = null;
+    private byte[] mApplicationExpirationDate = null;
     // - TLV extracted data
 
     // Additional data
@@ -112,11 +112,11 @@ public class PaycardObject extends RealmObject {
         this.mApplicationLabel = applicationLabel;
     }
 
-    public byte[] getPan() {
-        return mPan;
+    public byte[] getApplicationPan() {
+        return mApplicationPan;
     }
-    public void setPan(byte[] pan) {
-        this.mPan = pan;
+    public void setApplicationPan(byte[] applicationPan) {
+        this.mApplicationPan = applicationPan;
     }
 
     public byte[] getCardholderName() {
@@ -126,11 +126,11 @@ public class PaycardObject extends RealmObject {
         this.mCardholderName = cardholderName;
     }
 
-    public byte[] getExpirationDate() {
-        return mExpirationDate;
+    public byte[] getApplicationExpirationDate() {
+        return mApplicationExpirationDate;
     }
-    public void setExpirationDate(byte[] expirationDate) {
-        this.mExpirationDate = expirationDate;
+    public void setApplicationExpirationDate(byte[] applicationExpirationDate) {
+        this.mApplicationExpirationDate = applicationExpirationDate;
     }
     // - TLV extracted data
 
