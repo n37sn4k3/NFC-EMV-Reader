@@ -16,18 +16,17 @@ public class PaycardObject extends RealmObject {
 
     // TLV extracted data
     private byte[] mAid = null;
-
-    // ----
-
-    private byte[] mApplicationLabel = null;
+    private byte[] mApplicationLabel = null; private boolean mApplicationLabelHasAscii = false;
     private byte[] mApplicationPan = null;
-    private byte[] mCardholderName = null;
+    private byte[] mCardholderName = null; private boolean mCardholderNameHasAscii = false;
     private byte[] mApplicationExpirationDate = null;
     // - TLV extracted data
 
     // Additional data
     private Date mAddDate = null;
     // - Additional data
+
+    // ----
 
     public byte[] getHistoricalBytes() {
         return mHistoricalBytes;
@@ -103,13 +102,17 @@ public class PaycardObject extends RealmObject {
         this.mAid = aid;
     }
 
-    // ----
-
     public byte[] getApplicationLabel() {
         return mApplicationLabel;
     }
     public void setApplicationLabel(byte[] applicationLabel) {
         this.mApplicationLabel = applicationLabel;
+    }
+    public boolean getApplicationLabelHasAscii() {
+        return mApplicationLabelHasAscii;
+    }
+    public void setApplicationLabelHasAscii(boolean applicationLabelHasAscii) {
+        this.mApplicationLabelHasAscii = applicationLabelHasAscii;
     }
 
     public byte[] getApplicationPan() {
@@ -124,6 +127,12 @@ public class PaycardObject extends RealmObject {
     }
     public void setCardholderName(byte[] cardholderName) {
         this.mCardholderName = cardholderName;
+    }
+    public boolean getCardholderNameHasAscii() {
+        return mCardholderNameHasAscii;
+    }
+    public void setCardholderNameHasAscii(boolean cardholderNameHasAscii) {
+        this.mCardholderNameHasAscii = cardholderNameHasAscii;
     }
 
     public byte[] getApplicationExpirationDate() {

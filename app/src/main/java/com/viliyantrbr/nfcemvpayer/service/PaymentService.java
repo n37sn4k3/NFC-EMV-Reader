@@ -19,6 +19,10 @@ public class PaymentService extends HostApduService {
 
     private PaycardObject mPaycardObject;
 
+    public PaymentService() {
+        // Required empty public constructor
+    }
+
     public PaymentService(@NonNull PaycardObject paycardObject) {
         mPaycardObject = paycardObject;
     }

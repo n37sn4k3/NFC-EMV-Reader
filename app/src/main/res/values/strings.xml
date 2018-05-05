@@ -39,10 +39,25 @@
     <string name="nfc_a">NFC A</string>
     <string name="nfc_b">NFC B</string>
 
+    <!-- EMV Specification Abbreviations & Terms -->
     <string name="pse">PSE (Payment System Environment)</string>
+
     <string name="ppse">PPSE (Proximity Payment System Environment)</string>
-
     <string name="aid">AID (Application Identifier)</string>
-
     <string name="fci">FCI (File Control Information)</string>
+    <string name="application_label">Application Label</string>
+    <string name="pdol">PDOL (Processing Options Data Object List)</string>
+    <string name="gpo">GPO (Get Processing Options)</string>
+    <string name="application_pan">Application PAN (Primary Account Number)</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="application_expiration_date">Application Expiration Date</string>
+    <string name="afl">AFL (Application File Locator)</string>
+    <string name="atc">ATC (Application Transaction Counter)</string>
+    <string name="pin">PIN (Personal Identification Number)</string>
+    <string name="gac">GAC (Generate Application Cryptogram)</string>
+    <string name="log_entry">Log Entry</string>
+    <string name="log_format">Log Format</string>
+    <string name="cdol_1">CDOL1 (Card Risk Management Data Object List 1)</string>
+    <string name="cdol_2">CDOL2 (Card Risk Management Data Object List 2)</string>
+    <!-- - EMV Specification Abbreviations & Terms -->
 </resources>
