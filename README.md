@@ -9,8 +9,7 @@
 ## Application Features
 * Paycard read **(In Development)**
 * Paycard host (emulation) **(In Development)**
-* Multiple paycards storing
-* Encrypted paycards storing
+* Encrypted multiple paycards storing
 
 ## Supported EMV Paycards
 * Mastercard (PayPass); AID: A0000000041010
