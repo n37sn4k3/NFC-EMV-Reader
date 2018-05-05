@@ -20,7 +20,6 @@ import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 public class ReadPaycardActivity extends AppCompatActivity {
     private static final String TAG = ReadPaycardActivity.class.getSimpleName();
 
-
     private NfcAdapter mNfcAdapter = null;
 
     private AlertDialog mAlertDialog = null;
@@ -52,7 +51,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC Not Enabled");
         builder.setMessage("Enable NFC feature and come back again.");
-        builder.setNeutralButton("Enable in Settings", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Enable NFC", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
@@ -90,7 +89,9 @@ public class ReadPaycardActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -170,7 +171,9 @@ public class ReadPaycardActivity extends AppCompatActivity {
         }
 
         if (mAlertDialog != null) {
-            if (mAlertDialog.isShowing()) mAlertDialog.dismiss();
+            if (mAlertDialog.isShowing()) {
+                mAlertDialog.dismiss();
+            }
 
             mAlertDialog = null;
         }

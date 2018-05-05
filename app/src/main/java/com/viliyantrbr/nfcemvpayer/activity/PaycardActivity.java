@@ -20,14 +20,18 @@ public class PaycardActivity extends AppCompatActivity {
 
         String title = HexUtil.bytesToHexadecimal(getIntent().getByteArrayExtra("Pan"));
 
-        if (title != null) setTitle(title);
+        if (title != null) {
+            setTitle(title);
+        }
 
         setContentView(R.layout.activity_paycard);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
