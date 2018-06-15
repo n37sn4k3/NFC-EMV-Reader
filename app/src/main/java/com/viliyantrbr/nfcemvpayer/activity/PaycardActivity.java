@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class PaycardActivity extends AppCompatActivity {
     private static final String TAG = PaycardActivity.class.getSimpleName();
@@ -53,7 +54,7 @@ public class PaycardActivity extends AppCompatActivity {
         Log.i(TAG, "Host paycard");
 
         // Host paycard relative
-        Intent intent = new Intent(this, PaycardActivity.class);
+        Intent intent = new Intent(this, HostPaycardActivity.class);
         intent.putExtra(getString(R.string.pan_var_name), mPaycardObject.getApplicationPan());
 
         startActivity(intent);
@@ -71,7 +72,7 @@ public class PaycardActivity extends AppCompatActivity {
         try {
             mRealm.beginTransaction();
 
-            mRealm.deleteAll();
+            mPaycardObject.deleteFromRealm();
 
             mRealm.commitTransaction();
         } catch (Exception e) {

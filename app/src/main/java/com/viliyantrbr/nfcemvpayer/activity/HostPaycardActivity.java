@@ -31,6 +31,8 @@ import io.realm.Realm;
 public class HostPaycardActivity extends AppCompatActivity {
     private static final String TAG = HostPaycardActivity.class.getSimpleName();
 
+    private byte[] mApplicationPan = null;
+
     private NfcAdapter mNfcAdapter = null;
 
     private AlertDialog mAlertDialog = null;
@@ -119,9 +121,7 @@ public class HostPaycardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
 
-        byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
-
-        runOnUiThread(new HostPaycardThread(this, applicationPan));
+        mApplicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
 
         setContentView(R.layout.activity_host_paycard);
 
@@ -299,6 +299,8 @@ public class HostPaycardActivity extends AppCompatActivity {
             nfcHceNotSupported();
         }
     }
+
+    // runOnUiThread(new HostPaycardThread(this, mApplicationPan)); // Run on POS tap
 
     @Override
     protected void onStop() {

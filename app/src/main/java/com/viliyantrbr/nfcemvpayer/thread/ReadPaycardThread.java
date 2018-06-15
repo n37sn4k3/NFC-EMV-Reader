@@ -40,7 +40,7 @@ import io.realm.RealmList;
 public class ReadPaycardThread implements Runnable {
     private static final String TAG = ReadPaycardThread.class.getSimpleName();
 
-    private Context mContext = null;
+    private Context mContext;
 
     private IsoDep mIsoDep = null;
 
@@ -90,15 +90,11 @@ public class ReadPaycardThread implements Runnable {
     }
 
     private void successReadPaycard() {
-        Intent intent = new Intent(ReadPaycardActivity.ACTION_SUCCESS_READ_PAYCARD_BROADCAST);
-
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(ReadPaycardActivity.ACTION_SUCCESS_READ_PAYCARD_BROADCAST));
     }
 
     private void cannotReadPaycard() {
-        Intent intent = new Intent(ReadPaycardActivity.ACTION_CANNOT_READ_PAYCARD_BROADCAST);
-
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(ReadPaycardActivity.ACTION_CANNOT_READ_PAYCARD_BROADCAST));
     }
 
     @Override

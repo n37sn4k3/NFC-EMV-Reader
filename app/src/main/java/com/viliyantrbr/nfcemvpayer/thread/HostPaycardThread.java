@@ -24,7 +24,7 @@ public class HostPaycardThread implements Runnable {
 
     private PaycardObject mPaycardObject = null;
 
-    private Context mContext = null;
+    private Context mContext;
 
     public HostPaycardThread(@NonNull Context context, @NonNull byte[] applicationPan) {
         mContext = context;
@@ -83,15 +83,11 @@ public class HostPaycardThread implements Runnable {
     }
 
     private void successHostPaycard() {
-        Intent intent = new Intent(HostPaycardActivity.ACTION_SUCCESS_HOST_PAYCARD_BROADCAST);
-
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(HostPaycardActivity.ACTION_SUCCESS_HOST_PAYCARD_BROADCAST));
     }
 
     private void cannotHostPaycard() {
-        Intent intent = new Intent(HostPaycardActivity.ACTION_CANNOT_HOST_PAYCARD_BROADCAST);
-
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent(HostPaycardActivity.ACTION_CANNOT_HOST_PAYCARD_BROADCAST));
     }
 
     @Override
