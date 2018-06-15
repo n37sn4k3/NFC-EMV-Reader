@@ -53,9 +53,13 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
 
     private void updateXml() {
         if (mPaycardObjectRealmResults != null && !mPaycardObjectRealmResults.isEmpty()) {
-            if (mPaycardsLinearLayout != null) mPaycardsLinearLayout.setVisibility(View.GONE);
+            if (mPaycardsLinearLayout != null) {
+                mPaycardsLinearLayout.setVisibility(View.GONE);
+            }
 
-            if (mPaycardsListView != null) mPaycardsListView.setVisibility(View.VISIBLE);
+            if (mPaycardsListView != null) {
+                mPaycardsListView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -72,7 +76,9 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
             }
             // - Refresh results
 
-            if (mPaycardItemCustomArrayAdapter != null) mPaycardItemCustomArrayAdapter.notifyDataSetChanged();
+            if (mPaycardItemCustomArrayAdapter != null) {
+                mPaycardItemCustomArrayAdapter.notifyDataSetChanged();
+            }
 
             updateXml();
         }
@@ -128,7 +134,9 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
             mRealm = null;
         }
 
-        if (mPageTitle != null) mPageTitle = null;
+        if (mPageTitle != null) {
+            mPageTitle = null;
+        }
     }
 
     @Override

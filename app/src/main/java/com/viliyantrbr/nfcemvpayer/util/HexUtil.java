@@ -118,4 +118,19 @@ public class HexUtil {
 
         return result;
     }
+
+    @Nullable
+    public static String bytesToAscii(@NonNull byte[] bytesIn) {
+        // Returning result
+        String result = null;
+        // - Returning result
+
+        String hexadecimal = bytesToHexadecimal(bytesIn);
+
+        if (hexadecimal != null) {
+            result = hexadecimalToAscii(hexadecimal);
+        }
+
+        return result;
+    }
 }

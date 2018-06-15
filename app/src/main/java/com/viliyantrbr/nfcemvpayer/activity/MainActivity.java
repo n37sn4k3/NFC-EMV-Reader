@@ -114,32 +114,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Runtime permission(s)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ArrayList<String> runtimePermissions = new ArrayList<>();
+            String[] runtimePermissionsArr = {
+                    Manifest.permission.NFC,
 
-            runtimePermissions.add(Manifest.permission.NFC);
+                    Manifest.permission.INTERNET,
 
-            runtimePermissions.add(Manifest.permission.INTERNET);
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.CHANGE_WIFI_STATE,
 
-            runtimePermissions.add(Manifest.permission.ACCESS_NETWORK_STATE);
-            runtimePermissions.add(Manifest.permission.CHANGE_NETWORK_STATE);
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.CHANGE_NETWORK_STATE,
 
-            runtimePermissions.add(Manifest.permission.ACCESS_WIFI_STATE);
-            runtimePermissions.add(Manifest.permission.CHANGE_WIFI_STATE);
+                    Manifest.permission.VIBRATE
+            };
 
-            runtimePermissions.add(Manifest.permission.VIBRATE);
+            ArrayList<String> requestRuntimePermissionsArrList = new ArrayList<>();
 
-            if (!runtimePermissions.isEmpty()) {
-                ArrayList<String> requestRuntimePermissions = new ArrayList<>();
-
-                for (String aRuntimePermission : runtimePermissions) {
-                    if (checkSelfPermission(aRuntimePermission) != PackageManager.PERMISSION_GRANTED) {
-                        requestRuntimePermissions.add(aRuntimePermission);
-                    }
+            for (String runtimePermission : runtimePermissionsArr) {
+                if (checkSelfPermission(runtimePermission) != PackageManager.PERMISSION_GRANTED) { // checkSelfPermission(runtimePermission) == PackageManager.PERMISSION_DENIED
+                    requestRuntimePermissionsArrList.add(runtimePermission);
                 }
+            }
 
-                if (!requestRuntimePermissions.isEmpty()) {
-                    requestPermissions(requestRuntimePermissions.toArray(new String[requestRuntimePermissions.size()]), 1);
-                }
+            if (!requestRuntimePermissionsArrList.isEmpty()) {
+                requestPermissions(requestRuntimePermissionsArrList.toArray(new String[requestRuntimePermissionsArrList.size()]), 1);
             }
         }
         // - Runtime permission(s)

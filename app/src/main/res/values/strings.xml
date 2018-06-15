@@ -17,7 +17,7 @@
     <string name="contactless">Contactless</string>
 
     <string name="title_activity_read_paycard">Read Paycard</string>
-    <string name="description_activity_read_paycard">Hold contactless EMV paycard near the device NFC hardware in order to begin read.</string>
+    <string name="description_activity_read_paycard">Hold contactless EMV paycard near the device NFC hardware (the back panel on most phones and tablets) in order to begin read.</string>
 
     <string name="title_activity_host_paycard">Host Paycard</string>
     <string name="description_activity_host_paycard">Hold your device NFC hardware near the EMV payment terminal in order to begin host.</string>
@@ -36,12 +36,17 @@
     <string name="host">Host</string>
     <string name="hosting">Hosting…</string>
 
+    <string name="success_read_paycard">Success read paycard</string>
+    <string name="cannot_read_paycard">Cannot read paycard</string>
+
+    <string name="success_host_paycard">Success host paycard</string>
+    <string name="cannot_host_paycard">Cannot host paycard</string>
+
     <string name="nfc_a">NFC A</string>
     <string name="nfc_b">NFC B</string>
 
     <!-- EMV Specification Abbreviations & Terms -->
     <string name="pse">PSE (Payment System Environment)</string>
-
     <string name="ppse">PPSE (Proximity Payment System Environment)</string>
     <string name="aid">AID (Application Identifier)</string>
     <string name="fci">FCI (File Control Information)</string>
@@ -60,4 +65,10 @@
     <string name="cdol_1">CDOL1 (Card Risk Management Data Object List 1)</string>
     <string name="cdol_2">CDOL2 (Card Risk Management Data Object List 2)</string>
     <!-- - EMV Specification Abbreviations & Terms -->
+
+    <string name="added">Added</string>
+    <string name="updated">Updated</string>
+
+    <string name="paycard_added">Paycard added</string>
+    <string name="paycard_updated">Paycard updated</string>
 </resources>

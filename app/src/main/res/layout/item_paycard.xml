@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="Primary account number"
+        android:text="@string/application_pan"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:fontFamily="@font/ocr_a" />
@@ -29,7 +29,7 @@
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_gravity="center_horizontal"
-        android:contentDescription="Paycard type image" />
+        android:contentDescription="Paycard type (image)" />
 
     <TextView
         android:id="@+id/item_paycard_aid"
@@ -39,7 +39,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="AID (Application Identifier)"
+        android:text="@string/aid"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:fontFamily="@font/ocr_a" />
@@ -52,7 +52,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="Paycard type"
+        android:text="Paycard type (text)"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:fontFamily="@font/ocr_a" />
@@ -65,7 +65,20 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="Expiration date"
+        android:text="Exp Date"
+        android:textColor="@color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:fontFamily="@font/ocr_a" />
+
+    <TextView
+        android:id="@+id/item_paycard_add_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:text="Add Date"
         android:textColor="@color/white"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:fontFamily="@font/ocr_a" />

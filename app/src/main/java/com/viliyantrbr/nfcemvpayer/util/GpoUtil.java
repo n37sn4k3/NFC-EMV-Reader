@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class GpoUtil {
-    private static final String TAG = EmvUtil.class.getName();
+    private static final String TAG = GpoUtil.class.getName();
 
     @Nullable
     public byte[] cGpo(@NonNull byte[] pdolConstructed) {
@@ -241,7 +241,9 @@ public class GpoUtil {
                                     e.printStackTrace();
                                 }
 
-                                if (dateFormat != null) resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                if (dateFormat != null) {
+                                    resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                }
                             }
                         }
                         // - Transaction Date; 9A, 3 Byte(s)
@@ -282,7 +284,9 @@ public class GpoUtil {
                                     e.printStackTrace();
                                 }
 
-                                if (dateFormat != null) resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                if (dateFormat != null) {
+                                    resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                }
                             }
                         }
                         // - Transaction Time; 9F21; 3 Byte(s)

@@ -100,66 +100,88 @@ public class DolUtil {
         if (!result && pdol.length >= TTQ.length) {
             String ttqHexadecimal = HexUtil.bytesToHexadecimal(TTQ);
 
-            if (pdolHexadecimal != null && ttqHexadecimal != null && pdolHexadecimal.contains(ttqHexadecimal)) result = true;
+            if (pdolHexadecimal != null && ttqHexadecimal != null && pdolHexadecimal.contains(ttqHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= AMOUNT_AUTHORISED.length) {
             String amountAuthorisedHexadecimal = HexUtil.bytesToHexadecimal(AMOUNT_AUTHORISED);
 
-            if (pdolHexadecimal != null && amountAuthorisedHexadecimal != null && pdolHexadecimal.contains(amountAuthorisedHexadecimal)) result = true;
+            if (pdolHexadecimal != null && amountAuthorisedHexadecimal != null && pdolHexadecimal.contains(amountAuthorisedHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= AMOUNT_OTHER.length) {
             String amountOtherHexadecimal = HexUtil.bytesToHexadecimal(AMOUNT_OTHER);
 
-            if (pdolHexadecimal != null && amountOtherHexadecimal != null && pdolHexadecimal.contains(amountOtherHexadecimal)) result = true;
+            if (pdolHexadecimal != null && amountOtherHexadecimal != null && pdolHexadecimal.contains(amountOtherHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TERMINAL_COUNTRY_CODE.length) {
             String terminalCountryCodeHexadecimal = HexUtil.bytesToHexadecimal(TERMINAL_COUNTRY_CODE);
 
-            if (pdolHexadecimal != null && terminalCountryCodeHexadecimal != null && pdolHexadecimal.contains(terminalCountryCodeHexadecimal)) result = true;
+            if (pdolHexadecimal != null && terminalCountryCodeHexadecimal != null && pdolHexadecimal.contains(terminalCountryCodeHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TRANSACTION_CURRENCY_CODE.length) {
             String transactionCurrencyCode = HexUtil.bytesToHexadecimal(TRANSACTION_CURRENCY_CODE);
 
-            if (pdolHexadecimal != null && transactionCurrencyCode != null && pdolHexadecimal.contains(transactionCurrencyCode)) result = true;
+            if (pdolHexadecimal != null && transactionCurrencyCode != null && pdolHexadecimal.contains(transactionCurrencyCode)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TVR.length) {
             String tvrHexadecimal = HexUtil.bytesToHexadecimal(TVR);
 
-            if (pdolHexadecimal != null && tvrHexadecimal != null && pdolHexadecimal.contains(tvrHexadecimal)) result = true;
+            if (pdolHexadecimal != null && tvrHexadecimal != null && pdolHexadecimal.contains(tvrHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TRANSACTION_DATE.length) {
             String transactionDateHexadecimal = HexUtil.bytesToHexadecimal(TRANSACTION_DATE);
 
-            if (pdolHexadecimal != null && transactionDateHexadecimal != null && pdolHexadecimal.contains(transactionDateHexadecimal)) result = true;
+            if (pdolHexadecimal != null && transactionDateHexadecimal != null && pdolHexadecimal.contains(transactionDateHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TRANSACTION_TYPE.length) {
             String transactionTypeHexadecimal = HexUtil.bytesToHexadecimal(TRANSACTION_TYPE);
 
-            if (pdolHexadecimal != null && transactionTypeHexadecimal != null && pdolHexadecimal.contains(transactionTypeHexadecimal)) result = true;
+            if (pdolHexadecimal != null && transactionTypeHexadecimal != null && pdolHexadecimal.contains(transactionTypeHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= TRANSACTION_TIME.length) {
             String transactionTimeHexadecimal = HexUtil.bytesToHexadecimal(TRANSACTION_TIME);
 
-            if (pdolHexadecimal != null && transactionTimeHexadecimal != null && pdolHexadecimal.contains(transactionTimeHexadecimal)) result = true;
+            if (pdolHexadecimal != null && transactionTimeHexadecimal != null && pdolHexadecimal.contains(transactionTimeHexadecimal)) {
+                result = true;
+            }
         }
 
         if (!result && pdol.length >= UN_LENGTH_1.length) {
             String un_1Hexadecimal = HexUtil.bytesToHexadecimal(UN_LENGTH_1);
 
-            if (pdolHexadecimal != null && un_1Hexadecimal != null && pdolHexadecimal.contains(un_1Hexadecimal)) result = true;
+            if (pdolHexadecimal != null && un_1Hexadecimal != null && pdolHexadecimal.contains(un_1Hexadecimal)) {
+                result = true;
+            }
         }
         if (!result && pdol.length >= UN_LENGTH_4.length) {
             String un_4Hexadecimal = HexUtil.bytesToHexadecimal(UN_LENGTH_4);
 
-            if (pdolHexadecimal != null && un_4Hexadecimal != null && pdolHexadecimal.contains(un_4Hexadecimal)) result = true;
+            if (pdolHexadecimal != null && un_4Hexadecimal != null && pdolHexadecimal.contains(un_4Hexadecimal)) {
+                result = true;
+            }
         }
 
         return result;

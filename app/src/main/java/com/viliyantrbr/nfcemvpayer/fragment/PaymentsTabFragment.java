@@ -50,9 +50,13 @@ public class PaymentsTabFragment extends Fragment implements TabLayoutFragmentPa
 
     private void updateXml() {
         if (mPaymentObjectRealmResults != null && !mPaymentObjectRealmResults.isEmpty()) {
-            if (mPaymentsLinearLayout != null) mPaymentsLinearLayout.setVisibility(View.GONE);
+            if (mPaymentsLinearLayout != null) {
+                mPaymentsLinearLayout.setVisibility(View.GONE);
+            }
 
-            if (mPaymentsListView != null) mPaymentsListView.setVisibility(View.VISIBLE);
+            if (mPaymentsListView != null) {
+                mPaymentsListView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -69,7 +73,9 @@ public class PaymentsTabFragment extends Fragment implements TabLayoutFragmentPa
             }
             // - Refresh results
 
-            if (mPaymentItemCustomArrayAdapter != null) mPaymentItemCustomArrayAdapter.notifyDataSetChanged();
+            if (mPaymentItemCustomArrayAdapter != null) {
+                mPaymentItemCustomArrayAdapter.notifyDataSetChanged();
+            }
 
             updateXml();
         }
@@ -125,7 +131,9 @@ public class PaymentsTabFragment extends Fragment implements TabLayoutFragmentPa
             mRealm = null;
         }
 
-        if (mPageTitle != null) mPageTitle = null;
+        if (mPageTitle != null) {
+            mPageTitle = null;
+        }
     }
 
     @Override

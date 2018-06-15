@@ -49,6 +49,7 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
             viewHolder.paycardAidTextView = convertView.findViewById(R.id.item_paycard_aid);
             viewHolder.paycardTypeTextView = convertView.findViewById(R.id.item_paycard_type);
             viewHolder.paycardExpDateTextView = convertView.findViewById(R.id.item_paycard_exp_date);
+            viewHolder.paycardAddDateTextView = convertView.findViewById(R.id.item_paycard_add_date);
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,6 +135,33 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
             viewHolder.paycardExpDateTextView.setText("Exp. Date: " + (expDateString != null ? expDateString : "N/A"));
             // - Exp Date
+
+            // Add Date
+            String addDateString = null;
+
+            Date addDate = null;
+            try {
+                addDate = paycardObject.getAddDate();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.toString());
+
+                e.printStackTrace();
+            }
+
+            if (addDate != null) {
+                try {
+                    addDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yy", Locale.getDefault()).format(addDate);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    System.out.println(e.toString());
+
+                    e.printStackTrace();
+                }
+
+                viewHolder.paycardAddDateTextView.setText(addDateString != null ? addDateString : "N/A");
+            }
+            // - Add Date
         } else {
             viewHolder.paycardPanTextView.setText("N/A"); // PAN
 
@@ -144,6 +172,8 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
             viewHolder.paycardTypeTextView.setText("Type: N/A"); // Type (text)
 
             viewHolder.paycardExpDateTextView.setText("Exp. Date: N/A"); // Exp Date
+
+            viewHolder.paycardAddDateTextView.setText("Added / Updated: N/A"); // Add Date
         }
 
         return convertView;
@@ -155,5 +185,6 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
         TextView paycardAidTextView = null;
         TextView paycardTypeTextView = null;
         TextView paycardExpDateTextView = null;
+        TextView paycardAddDateTextView = null;
     }
 }

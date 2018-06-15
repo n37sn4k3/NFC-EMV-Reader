@@ -1,6 +1,9 @@
 package com.viliyantrbr.nfcemvpayer.envr;
 
 public class MainEnvr {
+    public static final long READ_PAYCARD_VIBE_TIME = 200; // milliseconds
+    public static final long HOST_PAYCARD_VIBE_TIME = 200; // milliseconds
+
     // Logging
     public static final boolean LOG_V = true; // Verbose
     public static final boolean LOG_D = true; // Debug

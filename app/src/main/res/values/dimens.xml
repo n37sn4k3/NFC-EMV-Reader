@@ -17,6 +17,7 @@
     <!--<dimen name="activity_vertical_margin_halve">8dp</dimen>-->
     <!--&lt;!&ndash; - Additional screen margins. &ndash;&gt;-->
 
+    <!-- Custom screen margins -->
     <dimen name="activity_margin">10dp</dimen>
 
     <dimen name="activity_horizontal_margin">@dimen/activity_margin</dimen>
@@ -29,6 +30,7 @@
     <dimen name="activity_margin_halve">5dp</dimen>
     <dimen name="activity_horizontal_margin_halve">5dp</dimen>
     <dimen name="activity_vertical_margin_halve">5dp</dimen>
+    <!-- - Custom screen margins -->
 
     <dimen name="fab_margin">16dp</dimen>
 

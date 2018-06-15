@@ -230,7 +230,9 @@ public class GacUtil {
                                     e.printStackTrace();
                                 }
 
-                                if (dateFormat != null) resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                if (dateFormat != null) {
+                                    resultValue = HexUtil.hexadecimalToBytes(dateFormat);
+                                }
                             }
                         }
                         // - Transaction Date; 9A, 3 Byte(s)
