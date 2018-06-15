@@ -45,6 +45,8 @@
     <string name="nfc_a">NFC A</string>
     <string name="nfc_b">NFC B</string>
 
+    <string name="pan_var_name">mApplicationPan</string>
+
     <!-- EMV Specification Abbreviations & Terms -->
     <string name="pse">PSE (Payment System Environment)</string>
     <string name="ppse">PPSE (Proximity Payment System Environment)</string>
@@ -71,4 +73,10 @@
 
     <string name="paycard_added">Paycard added</string>
     <string name="paycard_updated">Paycard updated</string>
+
+    <string name="paycard_host_success">Paycard host is successful</string>
+    <string name="paycard_host_no_success">Paycard host may be not successful</string>
+
+    <string name="paycard_snip_success">Paycard snip is successful</string>
+    <string name="paycard_snip_no_success">Paycard snip may be not successful</string>
 </resources>

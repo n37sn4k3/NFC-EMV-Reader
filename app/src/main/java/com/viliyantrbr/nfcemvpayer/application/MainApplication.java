@@ -57,7 +57,9 @@ public class MainApplication extends Application {
             encryptionKey = secretKey.getEncoded(); // AES key length (bytes): 512 / 8 (Encoded)
         }
 
-        if (encryptionKey != null) LogUtil.d(TAG, "Encryption key: " + HexUtil.bytesToHexadecimal(encryptionKey));
+        if (encryptionKey != null) {
+            LogUtil.d(TAG, "Encryption key: " + HexUtil.bytesToHexadecimal(encryptionKey));
+        }
         // - Encryption key
 
         // Realm
@@ -67,7 +69,9 @@ public class MainApplication extends Application {
                 /*.encryptionKey(encryptionKey)*/
                 .build();
 
-        if (realmConfiguration != null) Realm.setDefaultConfiguration(realmConfiguration);
+        if (realmConfiguration != null) {
+            Realm.setDefaultConfiguration(realmConfiguration);
+        }
         // - Realm
     }
 

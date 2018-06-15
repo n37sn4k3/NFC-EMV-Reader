@@ -49,13 +49,23 @@ public class PaymentsTabFragment extends Fragment implements TabLayoutFragmentPa
     } // For usage as context
 
     private void updateXml() {
-        if (mPaymentObjectRealmResults != null && !mPaymentObjectRealmResults.isEmpty()) {
-            if (mPaymentsLinearLayout != null) {
-                mPaymentsLinearLayout.setVisibility(View.GONE);
-            }
+        if (mPaymentObjectRealmResults != null) {
+            if (mPaymentObjectRealmResults.isEmpty()) {
+                if (mPaymentsLinearLayout != null) {
+                    mPaymentsLinearLayout.setVisibility(View.VISIBLE);
+                }
 
-            if (mPaymentsListView != null) {
-                mPaymentsListView.setVisibility(View.VISIBLE);
+                if (mPaymentsListView != null) {
+                    mPaymentsListView.setVisibility(View.GONE);
+                }
+            } else {
+                if (mPaymentsLinearLayout != null) {
+                    mPaymentsLinearLayout.setVisibility(View.GONE);
+                }
+
+                if (mPaymentsListView != null) {
+                    mPaymentsListView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

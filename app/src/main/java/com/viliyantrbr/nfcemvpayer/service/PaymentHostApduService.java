@@ -12,18 +12,18 @@ import com.viliyantrbr.nfcemvpayer.util.PseUtil;
 
 import java.util.Arrays;
 
-public class PaymentService extends HostApduService {
-    private static final String TAG = PaymentService.class.getSimpleName();
+public class PaymentHostApduService extends HostApduService {
+    private static final String TAG = PaymentHostApduService.class.getSimpleName();
 
     private Vibrator mVibrator = null;
 
     private PaycardObject mPaycardObject;
 
-    public PaymentService() {
+    public PaymentHostApduService() {
         // Required empty public constructor
     }
 
-    public PaymentService(@NonNull PaycardObject paycardObject) {
+    public PaymentHostApduService(@NonNull PaycardObject paycardObject) {
         mPaycardObject = paycardObject;
     }
 

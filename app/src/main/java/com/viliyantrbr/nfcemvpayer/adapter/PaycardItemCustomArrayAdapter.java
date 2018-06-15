@@ -56,7 +56,7 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), PaycardActivity.class);
                     if (paycardObject != null) {
-                        intent.putExtra("Pan", paycardObject.getApplicationPan());
+                        intent.putExtra(view.getContext().getString(R.string.pan_var_name), paycardObject.getApplicationPan());
                     }
 
                     view.getContext().startActivity(intent);

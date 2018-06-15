@@ -53,7 +53,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".service.PaymentService"
+            android:name=".service.PaymentHostApduService"
             android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
             <intent-filter>

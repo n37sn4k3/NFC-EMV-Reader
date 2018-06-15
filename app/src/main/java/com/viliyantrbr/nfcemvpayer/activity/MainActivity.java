@@ -21,7 +21,7 @@ import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.adapter.TabLayoutFragmentPagerAdapter;
 import com.viliyantrbr.nfcemvpayer.fragment.PaycardsTabFragment;
 import com.viliyantrbr.nfcemvpayer.fragment.PaymentsTabFragment;
-import com.viliyantrbr.nfcemvpayer.service.PaymentService;
+import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
-            ComponentName paymentServiceComponentName = new ComponentName(this, PaymentService.class);
+            ComponentName paymentServiceComponentName = new ComponentName(this, PaymentHostApduService.class);
 
             CardEmulation cardEmulation = CardEmulation.getInstance(NfcAdapter.getDefaultAdapter(this));
             if (cardEmulation.isDefaultServiceForCategory(paymentServiceComponentName, CardEmulation.CATEGORY_PAYMENT)) {

@@ -52,13 +52,23 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
     } // For usage as context
 
     private void updateXml() {
-        if (mPaycardObjectRealmResults != null && !mPaycardObjectRealmResults.isEmpty()) {
-            if (mPaycardsLinearLayout != null) {
-                mPaycardsLinearLayout.setVisibility(View.GONE);
-            }
+        if (mPaycardObjectRealmResults != null) {
+            if (mPaycardObjectRealmResults.isEmpty()) {
+                if (mPaycardsLinearLayout != null) {
+                    mPaycardsLinearLayout.setVisibility(View.VISIBLE);
+                }
 
-            if (mPaycardsListView != null) {
-                mPaycardsListView.setVisibility(View.VISIBLE);
+                if (mPaycardsListView != null) {
+                    mPaycardsListView.setVisibility(View.GONE);
+                }
+            } else {
+                if (mPaycardsLinearLayout != null) {
+                    mPaycardsLinearLayout.setVisibility(View.GONE);
+                }
+
+                if (mPaycardsListView != null) {
+                    mPaycardsListView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

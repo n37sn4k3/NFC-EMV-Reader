@@ -20,7 +20,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
+import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
+import com.viliyantrbr.nfcemvpayer.thread.HostPaycardThread;
+import com.viliyantrbr.nfcemvpayer.thread.ReadPaycardThread;
+import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
+
+import io.realm.Realm;
 
 public class HostPaycardActivity extends AppCompatActivity {
     private static final String TAG = HostPaycardActivity.class.getSimpleName();
@@ -112,6 +118,10 @@ public class HostPaycardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
+
+        byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
+
+        runOnUiThread(new HostPaycardThread(this, applicationPan));
 
         setContentView(R.layout.activity_host_paycard);
 

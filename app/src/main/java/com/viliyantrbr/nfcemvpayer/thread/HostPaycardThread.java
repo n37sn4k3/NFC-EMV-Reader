@@ -7,18 +7,47 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
+import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.activity.HostPaycardActivity;
 import com.viliyantrbr.nfcemvpayer.envr.MainEnvr;
+import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
+
+import io.realm.Realm;
 
 public class HostPaycardThread implements Runnable {
     private static final String TAG = HostPaycardThread.class.getSimpleName();
 
-    private Context mContext;
+    private Realm mRealm = null;
 
-    public HostPaycardThread(@NonNull Context context) {
+    private PaycardObject mPaycardObject = null;
+
+    private Context mContext = null;
+
+    public HostPaycardThread(@NonNull Context context, @NonNull byte[] applicationPan) {
         mContext = context;
+
+        try {
+            mRealm = Realm.getDefaultInstance();
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
+
+        if (mRealm != null) {
+            try {
+                mPaycardObject = mRealm.where(PaycardObject.class).equalTo(mContext.getString(R.string.pan_var_name), applicationPan).findFirst();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        }
 
         Vibrator vibrator = null;
         try {
@@ -68,6 +97,20 @@ public class HostPaycardThread implements Runnable {
     @Override
     public void run() {
         LogUtil.d(TAG, "\"" + TAG + "\": Thread run");
+
+        // Thread relative
+        if (mRealm == null || mPaycardObject == null) {
+            if (mRealm == null) {
+                Log.w(TAG, "Realm is null");
+            }
+            if (mPaycardObject == null) {
+                Log.w(TAG, "PaycardObject is null");
+            }
+
+            this.cannotHostPaycard();
+            return;
+        }
+        // - Thread relative
 
         // Finalize
         successHostPaycard();

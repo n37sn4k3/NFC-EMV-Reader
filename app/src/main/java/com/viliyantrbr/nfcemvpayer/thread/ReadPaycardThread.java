@@ -9,6 +9,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
@@ -29,7 +30,6 @@ import com.viliyantrbr.nfcemvpayer.util.PseUtil;
 import com.viliyantrbr.nfcemvpayer.util.TlvUtil;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -40,7 +40,7 @@ import io.realm.RealmList;
 public class ReadPaycardThread implements Runnable {
     private static final String TAG = ReadPaycardThread.class.getSimpleName();
 
-    private Context mContext;
+    private Context mContext = null;
 
     private IsoDep mIsoDep = null;
 
@@ -1459,6 +1459,8 @@ public class ReadPaycardThread implements Runnable {
         }
 
         if (realm == null) {
+            Log.w(TAG, "Realm is null");
+
             Toast.makeText(mContext, "Paycard cannot be saved", Toast.LENGTH_SHORT).show();
 
             cannotReadPaycard();
@@ -1467,7 +1469,7 @@ public class ReadPaycardThread implements Runnable {
 
         PaycardObject paycardObject = null;
         try {
-            paycardObject = realm.where(PaycardObject.class).equalTo("mApplicationPan", applicationPan).findFirst();
+            paycardObject = realm.where(PaycardObject.class).equalTo(mContext.getString(R.string.pan_var_name), applicationPan).findFirst();
         } catch (Exception e) {
             LogUtil.e(TAG, e.getMessage());
             LogUtil.e(TAG, e.toString());
@@ -1517,6 +1519,8 @@ public class ReadPaycardThread implements Runnable {
 
                 e.printStackTrace();
             }
+
+            Log.w(TAG, "PaycardObject is null");
 
             Toast.makeText(mContext, "Paycard cannot be saved", Toast.LENGTH_SHORT).show();
 
@@ -1573,7 +1577,10 @@ public class ReadPaycardThread implements Runnable {
         } else {
             paycardObject.setApplicationLabelHasAscii(false);
         }
-        paycardObject.setApplicationPan(applicationPan);
+
+        if (isNew) {
+            paycardObject.setApplicationPan(applicationPan);
+        } // Only set on paycard add
 
         paycardObject.setCardholderName(cardholderName);
         if (cardholderNameAscii != null && !cardholderNameAscii.isEmpty()) {

@@ -1,13 +1,19 @@
 package com.viliyantrbr.nfcemvpayer.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
@@ -29,6 +35,11 @@ public class PaycardActivity extends AppCompatActivity {
 
     private PaycardObject mPaycardObject = null;
 
+    private AlertDialog mAlertDialog = null;
+
+    private FloatingActionButton mHostPaycardFloatingActionButton = null;
+    private FloatingActionButton mNegativePaycardFloatingActionButton = null;
+
     private TextView mPaycardTypeTextView = null;
     private ImageView mPaycardTypeImageView = null;
     private TextView mPaycardAidTextView = null;
@@ -38,16 +49,66 @@ public class PaycardActivity extends AppCompatActivity {
     private TextView mPaycardApplicationLabelTextView = null;
     private TextView mPaycardCardholderNameTextView = null;
 
+    private void hostPaycard() {
+        Log.i(TAG, "Host paycard");
+
+        // Host paycard relative
+        Intent intent = new Intent(this, PaycardActivity.class);
+        intent.putExtra(getString(R.string.pan_var_name), mPaycardObject.getApplicationPan());
+
+        startActivity(intent);
+        // - Host paycard relative
+
+        finish();
+    }
+
+    private void snipPaycard() {
+        Log.i(TAG, "Snip paycard");
+
+        // Snip paycard relative
+        boolean hasException = false;
+
+        try {
+            mRealm.beginTransaction();
+
+            mRealm.deleteAll();
+
+            mRealm.commitTransaction();
+        } catch (Exception e) {
+            hasException = true;
+
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
+
+        if (!hasException) {
+            Log.i(TAG, getString(R.string.paycard_snip_success));
+
+            Toast.makeText(this, getString(R.string.paycard_snip_success), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.w(TAG, getString(R.string.paycard_snip_no_success));
+
+            Toast.makeText(this, getString(R.string.paycard_snip_no_success), Toast.LENGTH_SHORT).show();
+        }
+        // - Snip paycard relative
+
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
 
-        byte[] applicationPan = getIntent().getByteArrayExtra("Pan");
+        byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
 
         String applicationPanHexadecimal = HexUtil.bytesToHexadecimal(applicationPan);
 
-        setTitle(applicationPanHexadecimal);
+        if (applicationPanHexadecimal != null) {
+            setTitle(applicationPanHexadecimal);
+        }
 
         setContentView(R.layout.activity_paycard);
 
@@ -69,7 +130,7 @@ public class PaycardActivity extends AppCompatActivity {
 
         if (mRealm != null) {
             try {
-                mPaycardObject = mRealm.where(PaycardObject.class).equalTo("mApplicationPan", applicationPan).findFirst();
+                mPaycardObject = mRealm.where(PaycardObject.class).equalTo(getString(R.string.pan_var_name), applicationPan).findFirst();
             } catch (Exception e) {
                 LogUtil.e(TAG, e.getMessage());
                 LogUtil.e(TAG, e.toString());
@@ -77,6 +138,22 @@ public class PaycardActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+        mHostPaycardFloatingActionButton = findViewById(R.id.activity_paycard_fab_card_host);
+        mHostPaycardFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hostPaycard();
+            }
+        });
+
+        mNegativePaycardFloatingActionButton = findViewById(R.id.activity_paycard_fab_card_negative);
+        mNegativePaycardFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                snipPaycard();
+            }
+        });
 
         mPaycardTypeTextView = findViewById(R.id.content_paycard_type);
         mPaycardTypeImageView = findViewById(R.id.content_paycard_type_image);
@@ -116,9 +193,9 @@ public class PaycardActivity extends AppCompatActivity {
         // - Type (image)
 
         // AID
-        String aidString = HexUtil.bytesToHexadecimal(mPaycardObject.getAid());
+        String aidHexadecimal = HexUtil.bytesToHexadecimal(mPaycardObject.getAid());
 
-        mPaycardAidTextView.setText("AID: " + (aidString != null ? aidString : "N/A"));
+        mPaycardAidTextView.setText("AID: " + (aidHexadecimal != null ? aidHexadecimal : "N/A"));
         // - AID
 
         // Exp Date
@@ -379,6 +456,50 @@ public class PaycardActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity start");
+
+        if (mRealm == null || mPaycardObject == null) {
+            if (mRealm == null) {
+                Log.w(TAG, "Realm is null");
+            }
+            if (mPaycardObject == null) {
+                Log.w(TAG, "PaycardObject is null");
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Cannot read paycard data");
+            builder.setMessage("Enable NFC feature and come back again.");
+            builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+
+                    finish();
+                }
+            });
+            builder.setCancelable(false);
+
+            mAlertDialog = builder.create();
+
+            mAlertDialog.show();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity stop");
+
+        if (mAlertDialog != null) {
+            if (mAlertDialog.isShowing()) {
+                mAlertDialog.dismiss();
+            }
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Activity destroy");
@@ -404,6 +525,17 @@ public class PaycardActivity extends AppCompatActivity {
         }
         if (mPaycardTypeTextView != null) {
             mPaycardTypeTextView = null;
+        }
+
+        if (mNegativePaycardFloatingActionButton != null) {
+            mNegativePaycardFloatingActionButton = null;
+        }
+        if (mHostPaycardFloatingActionButton != null) {
+            mHostPaycardFloatingActionButton = null;
+        }
+
+        if (mAlertDialog != null) {
+            mAlertDialog = null;
         }
 
         if (mRealm != null) {
@@ -440,9 +572,13 @@ public class PaycardActivity extends AppCompatActivity {
         if (menuItem != null) {
             switch (menuItem.getItemId()) {
                 case R.id.action_paycard_host:
+                    hostPaycard();
+
                     return true;
 
                 case R.id.action_paycard_snip:
+                    snipPaycard();
+
                     return true;
 
                 default:
