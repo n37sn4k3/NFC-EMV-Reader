@@ -2,14 +2,12 @@ package com.viliyantrbr.nfcemvpayer.service;
 
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
-import com.viliyantrbr.nfcemvpayer.util.PseUtil;
 
 import java.util.Arrays;
 
@@ -80,9 +78,114 @@ public class PaymentHostApduService extends HostApduService {
                     responseApdu = mPaycardObject.getRGpo();
                 } else if (GpoUtil.isGpoCommand(commandApdu)) {
                     responseApdu = mPaycardObject.getRGpo();
-                } // Command APDU may be filled with different data, no problem - return out GPO
+                } // Command APDU may be filled with different data, no problem - return our GPO
             }
             // - GPO (Get Processing Options)
+
+            // AFL (Application File Locator) Record(s)
+            if (mPaycardObject.getCAflRecordsList() != null &&! mPaycardObject.getCAflRecordsList().isEmpty()
+                    &&
+                    mPaycardObject.getRAflRecordsList() != null && !mPaycardObject.getRAflRecordsList().isEmpty()) {
+                int listCSize = mPaycardObject.getCAflRecordsList().size();
+                int listRSize = mPaycardObject.getRAflRecordsList().size();
+
+                if (listCSize > 0 && listRSize > 0 && listCSize == listRSize) {
+                    for (int i = 0; i < listCSize; i++) {
+                        byte[] cReadRecord = null, rReadRecord = null;
+                        try {
+                            cReadRecord = mPaycardObject.getCAflRecordsList().get(i);
+                        } catch (Exception e) {
+                            LogUtil.e(TAG, e.getMessage());
+                            LogUtil.e(TAG, e.toString());
+
+                            e.printStackTrace();
+                        }
+                        try {
+                            rReadRecord = mPaycardObject.getRAflRecordsList().get(i);
+                        } catch (Exception e) {
+                            LogUtil.e(TAG, e.getMessage());
+                            LogUtil.e(TAG, e.toString());
+
+                            e.printStackTrace();
+                        }
+
+                        if (cReadRecord != null && rReadRecord != null) {
+                            if (Arrays.equals(commandApdu, cReadRecord)) {
+                                responseApdu = rReadRecord;
+                            }
+                        }
+                    }
+                }
+            }
+            // - AFL (Application File Locator) Record(s)
+
+            // Last Online ATC (Application Transaction Counter) Register
+            if (mPaycardObject.getCLastOnlineAtcRegister() != null && mPaycardObject.getRLastOnlineAtcRegister() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCLastOnlineAtcRegister())) {
+                    responseApdu = mPaycardObject.getRLastOnlineAtcRegister();
+                }
+            }
+            // - Last Online ATC (Application Transaction Counter) Register
+
+            // PIN (Personal Identification Number) Try Counter
+            if (mPaycardObject.getCPinTryCounter() != null && mPaycardObject.getRPinTryCounter() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCPinTryCounter())) {
+                    responseApdu = mPaycardObject.getRPinTryCounter();
+                }
+            }
+            // - PIN (Personal Identification Number) Try Counter
+
+            // ATC (Application Transaction Counter)
+            if (mPaycardObject.getCAtc() != null && mPaycardObject.getRAtc() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCAtc())) {
+                    responseApdu = mPaycardObject.getRAtc();
+                }
+            }
+            // - ATC (Application Transaction Counter)
+
+            // Log Format
+            if (mPaycardObject.getCLogFormat() != null && mPaycardObject.getRLogFormat() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCLogFormat())) {
+                    responseApdu = mPaycardObject.getRLogFormat();
+                }
+            }
+            // - Log Format
+
+            // Log Entry
+            if (mPaycardObject.getCLogEntryList() != null && !mPaycardObject.getCLogEntryList().isEmpty()
+                    &&
+                    mPaycardObject.getRLogEntryList() != null && !mPaycardObject.getRLogEntryList().isEmpty()) {
+                int listCSize = mPaycardObject.getCLogEntryList().size();
+                int listRSize = mPaycardObject.getRLogEntryList().size();
+                if (listCSize == listRSize) {
+                    for (int i = 0; i < listCSize; i++) {
+                        byte[] cReadRecord = null, rReadRecord = null;
+                        try {
+                            cReadRecord = mPaycardObject.getCLogEntryList().get(i);
+                        } catch (Exception e) {
+                            LogUtil.e(TAG, e.getMessage());
+                            LogUtil.e(TAG, e.toString());
+
+                            e.printStackTrace();
+                        }
+                        try {
+                            rReadRecord = mPaycardObject.getRLogEntryList().get(i);
+                        } catch (Exception e) {
+                            LogUtil.e(TAG, e.getMessage());
+                            LogUtil.e(TAG, e.toString());
+
+                            e.printStackTrace();
+                        }
+
+                        if (cReadRecord != null && rReadRecord != null) {
+                            if (Arrays.equals(commandApdu, cReadRecord)) {
+                                responseApdu = rReadRecord;
+                            }
+                        }
+                    }
+                }
+            }
+            // - Log Entry
 
             if (responseApdu != null) {
                 return responseApdu;

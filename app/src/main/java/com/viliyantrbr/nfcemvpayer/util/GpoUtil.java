@@ -20,11 +20,12 @@ public class GpoUtil {
     private static final byte GPO_P1 = (byte) 0x00, GPO_P2 = (byte) 0x00;
 
     public static boolean isGpoCommand(@NonNull byte[] commandApdu) {
-        return commandApdu.length > 4
+        return (commandApdu.length > 4
                 && commandApdu[0] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[0]
                 && commandApdu[1] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[1]
                 && commandApdu[2] == GPO_P1
-                && commandApdu[3] == GPO_P2;
+                && commandApdu[3] == GPO_P2
+        );
     }
 
     @Nullable
