@@ -41,11 +41,11 @@ public class PaymentHostApduService extends HostApduService {
         byte[] responseApdu = null;
 
         if (commandApdu != null) {
-            LogUtil.d(TAG, "\"" + TAG + "\": Command APDU: " + Arrays.toString(commandApdu));
+            LogUtil.d(TAG, "\"" + TAG + "\" EMV (C-APDU): Command APDU: " + Arrays.toString(commandApdu));
 
             String commandApduHexadecimal = HexUtil.bytesToHexadecimal(commandApdu);
             if (commandApduHexadecimal != null) {
-                LogUtil.d(TAG, "\"" + TAG + "\": Command APDU Hexadecimal: " + commandApduHexadecimal);
+                LogUtil.d(TAG, "\"" + TAG + "\" EMV (C-APDU): Command APDU Hexadecimal: " + commandApduHexadecimal);
             }
 
             // PSE (Payment System Environment)
@@ -188,6 +188,13 @@ public class PaymentHostApduService extends HostApduService {
             // - Log Entry
 
             if (responseApdu != null) {
+                LogUtil.d(TAG, "\"" + TAG + "\" EMV (R-APDU): Command APDU: " + Arrays.toString(responseApdu));
+
+                String responseApduHexadecimal = HexUtil.bytesToHexadecimal(responseApdu);
+                if (responseApduHexadecimal != null) {
+                    LogUtil.d(TAG, "\"" + TAG + "\" EMV (R-APDU): Response APDU Hexadecimal: " + responseApduHexadecimal);
+                }
+
                 return responseApdu;
             }
         }

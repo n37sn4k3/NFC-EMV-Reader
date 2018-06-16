@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/add_new_subtitle"
+                android:text="@string/add_new_paycard_subtitle"
                 android:textColor="@color/colorPrimary"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

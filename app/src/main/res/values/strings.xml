@@ -28,7 +28,8 @@
     <string name="no_paycards">No paycards yet</string>
     <string name="no_payments">No payments yet</string>
 
-    <string name="add_new_subtitle">Consider adding a new one.</string>
+    <string name="add_new_paycard_subtitle">Consider adding a new one.</string>
+    <string name="add_new_payment_subtitle">Consider making a new one.</string>
 
     <string name="read">Read</string>
     <string name="reading">Reading…</string>
