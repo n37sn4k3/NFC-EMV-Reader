@@ -17,6 +17,16 @@ import java.util.Locale;
 public class GpoUtil {
     private static final String TAG = GpoUtil.class.getName();
 
+    private static final byte GPO_P1 = 0x00, GPO_P2 = 0x00;
+
+    public static boolean isGpoCommand(byte[] commandApdu) {
+        return commandApdu.length > 4
+                && commandApdu[0] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[0]
+                && commandApdu[1] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[1]
+                && commandApdu[2] == GPO_P1
+                && commandApdu[3] == GPO_P2;
+    }
+
     @Nullable
     public byte[] cGpo(@NonNull byte[] pdolConstructed) {
         // Returning result
@@ -38,8 +48,8 @@ public class GpoUtil {
                 byteArrayOutputStream.write(ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS); // Cla, Ins
 
                 byteArrayOutputStream.write(new byte[]{
-                        (byte) 0x00, // P1
-                        (byte) 0x00, // P2
+                        GPO_P1, // P1
+                        GPO_P2, // P2
                         (byte) pdolConstructed.length // Lc
                 });
 
@@ -51,7 +61,13 @@ public class GpoUtil {
 
                 byteArrayOutputStream.close();
 
-                result = byteArrayOutputStream.toByteArray();
+                // Temporary result
+                byte[] tempResult = byteArrayOutputStream.toByteArray();
+                /// - Temporary result
+
+                if (tempResult != null && isGpoCommand(tempResult)) {
+                    result = tempResult;
+                }
             } catch (Exception e) {
                 LogUtil.e(TAG, e.getMessage());
                 LogUtil.e(TAG, e.toString());

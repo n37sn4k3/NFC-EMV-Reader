@@ -6,6 +6,7 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
+import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 import com.viliyantrbr.nfcemvpayer.util.PseUtil;
@@ -76,20 +77,34 @@ public class PaymentHostApduService extends HostApduService {
             }
 
             // PSE (Payment System Environment)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCPse()) && Arrays.equals(commandApdu, PseUtil.selectPse(null))) {
+            if (Arrays.equals(commandApdu, mPaycardObject.getCPse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPse(null))*/) {
                 responseApdu = mPaycardObject.getRPse();
             }
             // - PSE (Payment System Environment)
 
             // PPSE (Proximity Payment System Environment)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCPpse()) && Arrays.equals(commandApdu, PseUtil.selectPpse(null))) {
+            if (Arrays.equals(commandApdu, mPaycardObject.getCPpse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPpse(null))*/) {
                 responseApdu = mPaycardObject.getRPpse();
             }
             // - PPSE (Proximity Payment System Environment)
-        }
 
-        if (responseApdu != null) {
-            return responseApdu;
+            // FCI (File Control Information)
+            if (Arrays.equals(commandApdu, mPaycardObject.getCFci())) {
+                responseApdu = mPaycardObject.getRFci();
+            }
+            // - FCI (File Control Information)
+
+            // GPO (Get Processing Options)
+            if (Arrays.equals(commandApdu, mPaycardObject.getCGpo())) {
+                responseApdu = mPaycardObject.getRGpo();
+            } else if (GpoUtil.isGpoCommand(commandApdu)) {
+                responseApdu = mPaycardObject.getRGpo();
+            } // Command APDU may be filled with different data, no problem - return out GPO
+            // - GPO (Get Processing Options)
+
+            if (responseApdu != null) {
+                return responseApdu;
+            }
         }
 
         return new byte[0];
