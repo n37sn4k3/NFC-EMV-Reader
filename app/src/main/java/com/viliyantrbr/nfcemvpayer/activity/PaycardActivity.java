@@ -279,27 +279,34 @@ public class PaycardActivity extends AppCompatActivity {
 
         logContent.append("\n");
 
+        // PSE (Payment System Environment)
         if (mPaycardObject.getCPse() != null && mPaycardObject.getRPse() != null) {
             logContent.append(getString(R.string.pse)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCPse())).append("\n");
             logContent.append(getString(R.string.pse)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRPse())).append("\n");
 
             logContent.append("\n");
         }
+        // - PSE (Payment System Environment)
 
+        // PPSE (Proximity Payment System Environment)
         if (mPaycardObject.getCPpse() != null && mPaycardObject.getRPpse() != null) {
             logContent.append(getString(R.string.ppse)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCPpse())).append("\n");
             logContent.append(getString(R.string.ppse)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRPpse())).append("\n");
 
             logContent.append("\n");
         }
+        // - PPSE (Proximity Payment System Environment)
 
+        // FCI (File Control Information)
         if (mPaycardObject.getCFci() != null && mPaycardObject.getRFci() != null) {
             logContent.append(getString(R.string.fci)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCFci())).append("\n");
             logContent.append(getString(R.string.fci)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRFci())).append("\n");
 
             logContent.append("\n");
         }
+        // - FCI (File Control Information)
 
+        // PDOL (Processing Options Data Object List)
         if (mPaycardObject.getPdol() != null || mPaycardObject.getPdolConstructed() != null) {
             if (mPaycardObject.getPdol() != null) {
                 logContent.append(getString(R.string.pdol)).append(": ").append(HexUtil.bytesToHexadecimal(mPaycardObject.getPdol())).append("\n");
@@ -310,20 +317,26 @@ public class PaycardActivity extends AppCompatActivity {
 
             logContent.append("\n");
         }
+        // - PDOL (Processing Options Data Object List)
 
+        // GPO (Get Processing Options)
         if (mPaycardObject.getCGpo() != null && mPaycardObject.getRGpo() != null) {
             logContent.append(getString(R.string.gpo)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCGpo())).append("\n");
             logContent.append(getString(R.string.gpo)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRGpo())).append("\n");
 
             logContent.append("\n");
         }
+        // - GPO (Get Processing Options)
 
+        // AFL (Application File Locator) [GPO] Data
         if (mPaycardObject.getAflData() != null) {
             logContent.append(getString(R.string.afl)).append(": ").append(HexUtil.bytesToHexadecimal(mPaycardObject.getAflData())).append("\n");
 
             logContent.append("\n");
         }
+        // - AFL (Application File Locator) [GPO] Data
 
+        // AFL (Application File Locator) Record(s)
         if (mPaycardObject.getCAflRecordsList() != null &&! mPaycardObject.getCAflRecordsList().isEmpty()
                 &&
                 mPaycardObject.getRAflRecordsList() != null && !mPaycardObject.getRAflRecordsList().isEmpty()) {
@@ -367,7 +380,9 @@ public class PaycardActivity extends AppCompatActivity {
                 logContent.append("\n");
             }
         }
+        // - AFL (Application File Locator) Record(s)
 
+        // CDOL1 (Card Risk Management Data Object List 1) & CDOL2 (Card Risk Management Data Object List 2)
         if (mPaycardObject.getCdol1() != null || mPaycardObject.getCdol2() != null) {
             if (mPaycardObject.getCdol1() != null) {
                 logContent.append(getString(R.string.cdol_1)).append(": \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCdol1())).append("\n");
@@ -378,35 +393,45 @@ public class PaycardActivity extends AppCompatActivity {
 
             logContent.append("\n");
         }
+        // - CDOL1 (Card Risk Management Data Object List 1) & CDOL2 (Card Risk Management Data Object List 2)
 
+        // Last Online ATC (Application Transaction Counter) Register
         if (mPaycardObject.getCLastOnlineAtcRegister() != null && mPaycardObject.getRLastOnlineAtcRegister() != null) {
             logContent.append("Last Online ").append(getString(R.string.atc)).append(" Register C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCLastOnlineAtcRegister())).append("\n");
             logContent.append("Last Online ").append(getString(R.string.atc)).append(" Register R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRLastOnlineAtcRegister())).append("\n");
 
             logContent.append("\n");
         }
+        // - Last Online ATC (Application Transaction Counter) Register
 
+        // PIN (Personal Identification Number) Try Counter
         if (mPaycardObject.getCPinTryCounter() != null && mPaycardObject.getRPinTryCounter() != null) {
             logContent.append(getString(R.string.pin)).append(" Try Counter C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCPinTryCounter())).append("\n");
             logContent.append(getString(R.string.pin)).append(" Try Counter R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRPinTryCounter())).append("\n");
 
             logContent.append("\n");
         }
+        // - PIN (Personal Identification Number) Try Counter
 
+        // ATC (Application Transaction Counter)
         if (mPaycardObject.getCAtc() != null && mPaycardObject.getRAtc() != null) {
             logContent.append(getString(R.string.atc)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCAtc())).append("\n");
             logContent.append(getString(R.string.atc)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRAtc())).append("\n");
 
             logContent.append("\n");
         }
+        // - ATC (Application Transaction Counter)
 
+        // Log Format
         if (mPaycardObject.getCLogFormat() != null && mPaycardObject.getRLogFormat() != null) {
             logContent.append(getString(R.string.log_format)).append(" C-APDU -> \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getCLogFormat())).append("\n");
             logContent.append(getString(R.string.log_format)).append(" R-APDU <- \n").append(HexUtil.bytesToHexadecimal(mPaycardObject.getRLogFormat())).append("\n");
 
             logContent.append("\n");
         }
+        // - Log Format
 
+        // Log Entry
         if (mPaycardObject.getCLogEntryList() != null && !mPaycardObject.getCLogEntryList().isEmpty()
                 &&
                 mPaycardObject.getRLogEntryList() != null && !mPaycardObject.getRLogEntryList().isEmpty()) {
@@ -449,6 +474,7 @@ public class PaycardActivity extends AppCompatActivity {
                 logContent.append("\n");
             }
         }
+        // - Log Entry
 
         logContent.append("- ---- Tech Data - ISO 14443-3A, ISO 14443-3B");
 

@@ -689,7 +689,7 @@ public class ReadPaycardThread implements Runnable {
         }
         // - PayWave Only
 
-        // GPO Data
+        // AFL (Application File Locator) [GPO] Data
         byte[] aflData = null;
 
         // Response message template 1 (without tags and lengths)
@@ -733,11 +733,11 @@ public class ReadPaycardThread implements Runnable {
             cannotReadPaycard();
             return;
         }
-        // - GPO Data
+        // - AFL (Application File Locator) [GPO] Data
 
         byte[] cdol_1 = null, cdol_2 = null; // CDOL1 (Card Risk Management Data Object List 1) & CDOL2 (Card Risk Management Data Object List 2)
 
-        // Read AFL (Application File Locator) Record(s)
+        // AFL (Application File Locator) Record(s)
         RealmList<byte[]> cAflRecordsList = new RealmList<>(), rAflRecordsList = new RealmList<>();
 
         ArrayList<AflObject> aflObjectArrayList = new AflUtil().getAflDataRecords(aflData);
@@ -948,7 +948,7 @@ public class ReadPaycardThread implements Runnable {
             cannotReadPaycard();
             return;
         }
-        // - Read AFL (Application File Locator) Record(s)
+        // - AFL (Application File Locator) Record(s)
 
         /*// Last Online ATC (Application Transaction Counter) Register (<- Via Command)
         byte[] cLastOnlineAtcRegister = null, rLastOnlineAtcRegister = null; // C-APDU & R-APDU

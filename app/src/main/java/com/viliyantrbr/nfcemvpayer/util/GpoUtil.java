@@ -17,9 +17,9 @@ import java.util.Locale;
 public class GpoUtil {
     private static final String TAG = GpoUtil.class.getName();
 
-    private static final byte GPO_P1 = 0x00, GPO_P2 = 0x00;
+    private static final byte GPO_P1 = (byte) 0x00, GPO_P2 = (byte) 0x00;
 
-    public static boolean isGpoCommand(byte[] commandApdu) {
+    public static boolean isGpoCommand(@NonNull byte[] commandApdu) {
         return commandApdu.length > 4
                 && commandApdu[0] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[0]
                 && commandApdu[1] == ReadPaycardConstsHelper.GET_PROCESSING_OPTIONS[1]

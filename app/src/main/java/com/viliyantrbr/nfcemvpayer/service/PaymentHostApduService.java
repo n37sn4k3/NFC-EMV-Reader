@@ -16,8 +16,6 @@ import java.util.Arrays;
 public class PaymentHostApduService extends HostApduService {
     private static final String TAG = PaymentHostApduService.class.getSimpleName();
 
-    private Vibrator mVibrator = null;
-
     private PaycardObject mPaycardObject;
 
     public PaymentHostApduService() {
@@ -32,36 +30,12 @@ public class PaymentHostApduService extends HostApduService {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG, "\"" + TAG + "\": Service create");
-
-        try {
-            mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
-
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Service destroy");
-
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator()) {
-                try {
-                    mVibrator.cancel();
-                } catch (Exception e) {
-                    LogUtil.e(TAG, e.getMessage());
-                    LogUtil.e(TAG, e.toString());
-
-                    e.printStackTrace();
-                }
-            }
-
-            mVibrator = null;
-        }
     }
 
     @Override
@@ -77,29 +51,37 @@ public class PaymentHostApduService extends HostApduService {
             }
 
             // PSE (Payment System Environment)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCPse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPse(null))*/) {
-                responseApdu = mPaycardObject.getRPse();
+            if (mPaycardObject.getCPse() != null && mPaycardObject.getRPse() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCPse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPse(null))*/) {
+                    responseApdu = mPaycardObject.getRPse();
+                }
             }
             // - PSE (Payment System Environment)
 
             // PPSE (Proximity Payment System Environment)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCPpse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPpse(null))*/) {
-                responseApdu = mPaycardObject.getRPpse();
+            if (mPaycardObject.getCPpse() != null && mPaycardObject.getRPpse() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCPpse()) /*&& Arrays.equals(commandApdu, PseUtil.selectPpse(null))*/) {
+                    responseApdu = mPaycardObject.getRPpse();
+                }
             }
             // - PPSE (Proximity Payment System Environment)
 
             // FCI (File Control Information)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCFci())) {
-                responseApdu = mPaycardObject.getRFci();
+            if (mPaycardObject.getCFci() != null && mPaycardObject.getRFci() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCFci())) {
+                    responseApdu = mPaycardObject.getRFci();
+                }
             }
             // - FCI (File Control Information)
 
             // GPO (Get Processing Options)
-            if (Arrays.equals(commandApdu, mPaycardObject.getCGpo())) {
-                responseApdu = mPaycardObject.getRGpo();
-            } else if (GpoUtil.isGpoCommand(commandApdu)) {
-                responseApdu = mPaycardObject.getRGpo();
-            } // Command APDU may be filled with different data, no problem - return out GPO
+            if (mPaycardObject.getCGpo() != null && mPaycardObject.getRGpo() != null) {
+                if (Arrays.equals(commandApdu, mPaycardObject.getCGpo())) {
+                    responseApdu = mPaycardObject.getRGpo();
+                } else if (GpoUtil.isGpoCommand(commandApdu)) {
+                    responseApdu = mPaycardObject.getRGpo();
+                } // Command APDU may be filled with different data, no problem - return out GPO
+            }
             // - GPO (Get Processing Options)
 
             if (responseApdu != null) {
