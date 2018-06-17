@@ -3,9 +3,9 @@ package com.viliyantrbr.nfcemvpayer.service;
 import android.content.Intent;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
@@ -13,23 +13,36 @@ import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.util.Arrays;
 
+import io.realm.Realm;
+
 public class PaymentHostApduService extends HostApduService {
     private static final String TAG = PaymentHostApduService.class.getSimpleName();
 
-    private PaycardObject mPaycardObject;
+    private Realm mRealm = null;
+
+    private PaycardObject mPaycardObject = null;
 
     public PaymentHostApduService() {
         // Required empty public constructor
-    }
-
-    public PaymentHostApduService(@NonNull PaycardObject paycardObject) {
-        mPaycardObject = paycardObject;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         LogUtil.d(TAG, "\"" + TAG + "\": Service start command");
+
+        byte[] applicationPan = intent.getByteArrayExtra(getString(R.string.pan_var_name));
+
+        if (mRealm != null) {
+            try {
+                mPaycardObject = mRealm.where(PaycardObject.class).equalTo(getString(R.string.pan_var_name), applicationPan).findFirst();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        }
 
         return START_STICKY_COMPATIBILITY;
     }
@@ -39,12 +52,38 @@ public class PaymentHostApduService extends HostApduService {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG, "\"" + TAG + "\": Service create");
+
+        try {
+            mRealm = Realm.getDefaultInstance();
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Service destroy");
+
+        if (mRealm != null) {
+            if (mPaycardObject != null) {
+                mPaycardObject = null;
+            }
+
+            try {
+                mRealm.close();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+
+            mRealm = null;
+        }
     }
 
     @Override
