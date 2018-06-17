@@ -1,8 +1,11 @@
 package com.viliyantrbr.nfcemvpayer.thread;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -13,6 +16,7 @@ import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.activity.HostPaycardActivity;
 import com.viliyantrbr.nfcemvpayer.envr.MainEnvr;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
+import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import io.realm.Realm;
@@ -106,6 +110,7 @@ public class HostPaycardThread implements Runnable {
             this.cannotHostPaycard();
             return;
         }
+
         // - Thread relative
 
         // Finalize

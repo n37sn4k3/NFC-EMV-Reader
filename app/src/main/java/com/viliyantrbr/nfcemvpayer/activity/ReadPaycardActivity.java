@@ -52,7 +52,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                finish();
+                finish(false);
             }
         });
         builder.setCancelable(false);
@@ -79,7 +79,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                finish();
+                finish(false);
             }
         });
         builder.setCancelable(false);

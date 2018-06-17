@@ -1,8 +1,10 @@
 package com.viliyantrbr.nfcemvpayer.service;
 
+import android.content.Intent;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
@@ -23,6 +25,15 @@ public class PaymentHostApduService extends HostApduService {
     public PaymentHostApduService(@NonNull PaycardObject paycardObject) {
         mPaycardObject = paycardObject;
     }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        LogUtil.d(TAG, "\"" + TAG + "\": Service start command");
+
+        return START_STICKY_COMPATIBILITY;
+    }
+
 
     @Override
     public void onCreate() {
@@ -83,7 +94,7 @@ public class PaymentHostApduService extends HostApduService {
             // - GPO (Get Processing Options)
 
             // AFL (Application File Locator) Record(s)
-            if (mPaycardObject.getCAflRecordsList() != null &&! mPaycardObject.getCAflRecordsList().isEmpty()
+            if (mPaycardObject.getCAflRecordsList() != null && !mPaycardObject.getCAflRecordsList().isEmpty()
                     &&
                     mPaycardObject.getRAflRecordsList() != null && !mPaycardObject.getRAflRecordsList().isEmpty()) {
                 int listCSize = mPaycardObject.getCAflRecordsList().size();
@@ -204,13 +215,16 @@ public class PaymentHostApduService extends HostApduService {
 
     @Override
     public void onDeactivated(int reason) {
-        try {
-            stopSelf();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        switch (reason) {
+            case DEACTIVATION_LINK_LOSS:
+                Log.w(TAG, "Deactivated: Link Loss");
+                break;
 
-            e.printStackTrace();
+            case DEACTIVATION_DESELECTED:
+                Log.w(TAG, "Deactivated: Deselected");
+                break;
         }
+
+        stopSelf();
     }
 }

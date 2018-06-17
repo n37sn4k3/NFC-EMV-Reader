@@ -20,13 +20,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
-import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
-import com.viliyantrbr.nfcemvpayer.thread.HostPaycardThread;
-import com.viliyantrbr.nfcemvpayer.thread.ReadPaycardThread;
-import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
-
-import io.realm.Realm;
 
 public class HostPaycardActivity extends AppCompatActivity {
     private static final String TAG = HostPaycardActivity.class.getSimpleName();
@@ -36,6 +31,8 @@ public class HostPaycardActivity extends AppCompatActivity {
     private NfcAdapter mNfcAdapter = null;
 
     private AlertDialog mAlertDialog = null;
+
+    private Intent mPaymentHostApduServiceIntent = null;
 
     // Receiver(s)
     // Broadcast intent action(s)
@@ -226,6 +223,15 @@ public class HostPaycardActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
+
+        mPaymentHostApduServiceIntent = new Intent(this, PaymentHostApduService.class);
+        if (mApplicationPan != null) {
+            mPaymentHostApduServiceIntent.putExtra(getString(R.string.pan_var_name), mApplicationPan);
+        }
+
+        // Service(s)
+        startService(mPaymentHostApduServiceIntent);
+        // - Service(s)
     }
 
     @Override
@@ -337,6 +343,10 @@ public class HostPaycardActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Activity destroy");
+
+        // Service(s)
+        stopService(mPaymentHostApduServiceIntent);
+        // - Service(s)
 
         if (mCannotHostPaycardCustomReceiver != null) {
             mCannotHostPaycardCustomReceiver = null;
