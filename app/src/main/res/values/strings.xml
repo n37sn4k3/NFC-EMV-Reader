@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">NFC EMV Payer</string>
 
+    <string name="custom_toolbar_logo">Custom toolbar logo</string>
+
     <string name="action_settings">Settings</string>
 
     <string name="action_paycard_host">Host</string>
@@ -25,16 +27,25 @@
     <string name="description_waiting_app_compat_activity_read_host">Waiting for tag…</string>
     <string name="description_warning_app_compat_activity_read_host">Do not move the paycard or the device until process finished.</string>
 
-    <string name="no_paycards">No paycards yet</string>
-    <string name="no_payments">No payments yet</string>
+    <string name="no_paycards">No paycards added</string>
+    <string name="no_payments">No payments made</string>
 
     <string name="add_new_paycard_subtitle">Consider adding a new one.</string>
     <string name="add_new_payment_subtitle">Consider making a new one.</string>
 
+    <string name="search">Search</string>
+    <string name="searching">Searching…</string>
+    <string name="search_hint">Search…</string>
+
+    <string name="search_paycards_hint">Search paycards…</string>
+    <string name="search_payments_hint">Search payments…</string>
+
     <string name="read">Read</string>
+    <string name="read_hint">Read…</string>
     <string name="reading">Reading…</string>
 
     <string name="host">Host</string>
+    <string name="host_hint">Host…</string>
     <string name="hosting">Hosting…</string>
 
     <string name="success_read_paycard">Success read paycard</string>

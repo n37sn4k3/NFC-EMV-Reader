@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.adapter.TabLayoutFragmentPagerAdapter;
@@ -30,6 +31,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private TextView mSearchTextView = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        try {
+            mSearchTextView = findViewById(R.id.search);
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
 
         ArrayList<TabLayoutFragmentPagerAdapter.ITabLayoutFragmentPagerAdapter> arrayList = new ArrayList<>();
         arrayList.add(new PaycardsTabFragment());
@@ -57,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
         Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(0)).getIcon()).setColorFilter(tabSelectedIconColor, PorterDuff.Mode.SRC_IN);
 
+        if (mSearchTextView != null) {
+            mSearchTextView.setHint(R.string.search_paycards_hint);
+        }
+
         for (int i = 1; i < arrayList.size(); i++) {
             Objects.requireNonNull(tabLayout.getTabAt(i)).setIcon(arrayList.get(i).getIcon());
 
@@ -67,6 +83,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
+                LogUtil.d(TAG, "Tab select");
+
+                if (tab.getText() != null) {
+                    LogUtil.i(TAG, "Tab select: " + tab.getText());
+
+                    if (tab.getText().equals(getString(R.string.paycards))) {
+                        if (mSearchTextView != null) {
+                            mSearchTextView.setHint(getString(R.string.search_paycards_hint));
+                        }
+                    } else if (tab.getText().equals(getString(R.string.payments))) {
+                        if (mSearchTextView != null) {
+                            mSearchTextView.setHint(getString(R.string.search_payments_hint));
+                        }
+                    }
+                }
 
                 if (tab.getIcon() != null) {
                     tab.getIcon().setColorFilter(tabSelectedIconColor, PorterDuff.Mode.SRC_IN);
@@ -76,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 super.onTabUnselected(tab);
+                LogUtil.d(TAG, "Tab unselect");
+
+                if (tab.getText() != null) {
+                    LogUtil.i(TAG, "Tab unselect: " + tab.getText());
+                }
 
                 if (tab.getIcon() != null) {
                     tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
@@ -85,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 super.onTabReselected(tab);
+                LogUtil.d(TAG, "Tab reselect");
+
+                if (tab.getText() != null) {
+                    LogUtil.i(TAG, "Tab reselect: " + tab);
+                }
             }
         });
 
@@ -125,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.ACCESS_NETWORK_STATE,
                     Manifest.permission.CHANGE_NETWORK_STATE,
 
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+
                     Manifest.permission.VIBRATE
             };
 
@@ -144,6 +188,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity destroy");
+
+        if (mSearchTextView != null) {
+            mSearchTextView = null;
+        }
+    }
+
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (menu != null) {
             getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -167,5 +221,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return false;
-    }
+    }*/
 }
