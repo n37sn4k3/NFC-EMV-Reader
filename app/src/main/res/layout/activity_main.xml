@@ -70,22 +70,16 @@
             android:background="#EFEFEF">
 
             <TextView
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@drawable/search"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/activity_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:gravity="center_vertical"
-                android:textColorHint="#9F9F9F"
-                android:textSize="14sp"
-                android:hint="@string/search_hint" />
+                android:id="@+id/custom_toolbar_info"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_margin="@dimen/activity_margin"
+                android:textSize="16sp"
+                android:textColor="#9F9F9F"
+                android:text="0 Paycards | 0 Payments"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 

@@ -33,13 +33,6 @@
     <string name="add_new_paycard_subtitle">Consider adding a new one.</string>
     <string name="add_new_payment_subtitle">Consider making a new one.</string>
 
-    <string name="search">Search</string>
-    <string name="searching">Searching…</string>
-    <string name="search_hint">Search…</string>
-
-    <string name="search_paycards_hint">Search paycards…</string>
-    <string name="search_payments_hint">Search payments…</string>
-
     <string name="read">Read</string>
     <string name="read_hint">Read…</string>
     <string name="reading">Reading…</string>
@@ -87,8 +80,8 @@
     <string name="paycard_updated">Paycard updated</string>
 
     <string name="paycard_host_success">Paycard host is successful</string>
-    <string name="paycard_host_no_success">Paycard host may be not successful</string>
+    <string name="paycard_host_no_success">Paycard host may not be successful</string>
 
     <string name="paycard_snip_success">Paycard snip is successful</string>
-    <string name="paycard_snip_no_success">Paycard snip may be not successful</string>
+    <string name="paycard_snip_no_success">Paycard snip may not be successful</string>
 </resources>
