@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideOverlay"
+        android:padding="@dimen/activity_margin_double"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Mastercard (PayPass)" />
+
+            <ImageView
+                android:id="@+id/item_paycard_type_mastercard_image"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/card_mastercard"
+                android:contentDescription="Paycard type Mastercard (image)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="AID: A0000000041010" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:background="#9F9F9F" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Maestro (PayPass)" />
+
+            <ImageView
+                android:id="@+id/item_paycard_type_maestro_image"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/card_maestro"
+                android:contentDescription="Paycard type Maestro (image)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="AID: A0000000043060" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:background="#9F9F9F" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Visa (PayWave)" />
+
+            <ImageView
+                android:id="@+id/item_paycard_type_visa_image"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/card_visa"
+                android:contentDescription="Paycard type Visa (image)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="AID: A0000000031010" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:background="#9F9F9F" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Visa Electron (PayWave)" />
+
+            <ImageView
+                android:id="@+id/item_paycard_type_visa_electron_image"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/card_visa_electron"
+                android:contentDescription="Paycard type Visa Electron (image)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="AID: A0000000032010" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

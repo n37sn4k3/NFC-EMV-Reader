@@ -11,7 +11,7 @@ public class AidUtil {
     private static final String TAG = AidUtil.class.getName();
 
     /*
-        MasterCard (PayPass)
+        Mastercard (PayPass)
         RID: A000000004
         PIX: 1010
         AID (Application Identifier): A0000000041010

@@ -12,7 +12,9 @@
     <string name="paycards">Paycards</string>
     <string name="payments">Payments</string>
 
-    <string name="title_activity_paycard">PaycardActivity</string>
+    <string name="supported_paycards">Supported paycards</string>
+
+    <string name="title_activity_paycard">Paycard Activity</string>
 
     <string name="host_apdu_description">NFC Host Apdu Service</string>
 
@@ -72,6 +74,8 @@
     <string name="cdol_1">CDOL1 (Card Risk Management Data Object List 1)</string>
     <string name="cdol_2">CDOL2 (Card Risk Management Data Object List 2)</string>
     <!-- - EMV Specification Abbreviations & Terms -->
+
+    <string name="close">Close</string>
 
     <string name="added">Added</string>
     <string name="updated">Updated</string>

@@ -32,7 +32,7 @@
             android:background="#EFEFEF">
 
             <ImageView
-                android:id="@+id/custom_toolbar_logo"
+                android:id="@+id/custom_toolbar_logo_image_view"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_alignParentStart="true"
@@ -46,7 +46,7 @@
                 android:adjustViewBounds="true" />
 
             <TextView
-                android:id="@+id/custom_toolbar_text"
+                android:id="@+id/custom_toolbar_name_text_view"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:paddingTop="6dp"
@@ -69,16 +69,15 @@
             android:layout_height="wrap_content"
             android:background="#EFEFEF">
 
-            <TextView
-                android:id="@+id/custom_toolbar_info"
-                android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/custom_toolbar_supported_paycards_button"
                 android:layout_width="wrap_content"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_margin"
-                android:textSize="16sp"
-                android:textColor="#9F9F9F"
-                android:text="0 Paycards | 0 Payments"
+                android:paddingStart="@dimen/activity_horizontal_margin_double"
+                android:paddingEnd="@dimen/activity_horizontal_margin_double"
+                android:text="@string/supported_paycards"
+                android:textAllCaps="true"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

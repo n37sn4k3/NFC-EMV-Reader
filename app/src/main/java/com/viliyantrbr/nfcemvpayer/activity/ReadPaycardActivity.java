@@ -74,7 +74,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
             }
         });
-        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

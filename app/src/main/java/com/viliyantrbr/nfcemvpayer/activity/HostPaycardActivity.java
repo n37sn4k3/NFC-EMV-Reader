@@ -26,8 +26,6 @@ import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 public class HostPaycardActivity extends AppCompatActivity {
     private static final String TAG = HostPaycardActivity.class.getSimpleName();
 
-    private byte[] mApplicationPan = null;
-
     private NfcAdapter mNfcAdapter = null;
 
     private AlertDialog mAlertDialog = null;
@@ -77,7 +75,7 @@ public class HostPaycardActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
             }
         });
-        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getText(R.string.close), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -118,7 +116,7 @@ public class HostPaycardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
 
-        mApplicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
+        byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
 
         setContentView(R.layout.activity_host_paycard);
 
@@ -225,8 +223,8 @@ public class HostPaycardActivity extends AppCompatActivity {
         }
 
         mPaymentHostApduServiceIntent = new Intent(this, PaymentHostApduService.class);
-        if (mApplicationPan != null) {
-            mPaymentHostApduServiceIntent.putExtra(getString(R.string.pan_var_name), mApplicationPan);
+        if (applicationPan != null) {
+            mPaymentHostApduServiceIntent.putExtra(getString(R.string.pan_var_name), applicationPan);
         }
 
         // Service(s)
