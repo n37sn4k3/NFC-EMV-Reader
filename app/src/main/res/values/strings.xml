@@ -21,10 +21,12 @@
     <string name="contactless">Contactless</string>
 
     <string name="title_activity_read_paycard">Read Paycard</string>
-    <string name="description_activity_read_paycard">Hold contactless EMV paycard near the device NFC hardware (the back panel on most phones and tablets) in order to begin read.</string>
+    <string name="description_activity_read_paycard">Hold contactless EMV paycard near the device NFC hardware in order to begin read.</string>
 
     <string name="title_activity_host_paycard">Host Paycard</string>
     <string name="description_activity_host_paycard">Hold your device NFC hardware near the EMV payment terminal in order to begin host.</string>
+
+    <string name="nfc_hardware_help">Device NFC hardware is located in or near the device back panel on most NFC phones and tablets.</string>
 
     <string name="description_waiting_app_compat_activity_read_host">Waiting for tag…</string>
     <string name="description_warning_app_compat_activity_read_host">Do not move the paycard or the device until process finished.</string>
@@ -86,6 +88,6 @@
     <string name="paycard_host_success">Paycard host is successful</string>
     <string name="paycard_host_no_success">Paycard host may not be successful</string>
 
-    <string name="paycard_snip_success">Paycard snip is successful</string>
-    <string name="paycard_snip_no_success">Paycard snip may not be successful</string>
+    <string name="paycard_wipe_success">Paycard wipe is successful</string>
+    <string name="paycard_wipe_no_success">Paycard wipe may not be successful</string>
 </resources>

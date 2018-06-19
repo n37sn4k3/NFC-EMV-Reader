@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class PaycardActivity extends AppCompatActivity {
     private static final String TAG = PaycardActivity.class.getSimpleName();
@@ -63,10 +62,10 @@ public class PaycardActivity extends AppCompatActivity {
         finish();
     }
 
-    private void snipPaycard() {
-        Log.i(TAG, "Snip paycard");
+    private void wipePaycard() {
+        Log.i(TAG, "Wipe paycard");
 
-        // Snip paycard relative
+        // Wipe paycard relative
         boolean hasException = false;
 
         try {
@@ -85,15 +84,15 @@ public class PaycardActivity extends AppCompatActivity {
         }
 
         if (!hasException) {
-            Log.i(TAG, getString(R.string.paycard_snip_success));
+            Log.i(TAG, getString(R.string.paycard_wipe_success));
 
-            Toast.makeText(this, getString(R.string.paycard_snip_success), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.paycard_wipe_success), Toast.LENGTH_SHORT).show();
         } else {
-            Log.w(TAG, getString(R.string.paycard_snip_no_success));
+            Log.w(TAG, getString(R.string.paycard_wipe_no_success));
 
-            Toast.makeText(this, getString(R.string.paycard_snip_no_success), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.paycard_wipe_no_success), Toast.LENGTH_SHORT).show();
         }
-        // - Snip paycard relative
+        // - Wipe paycard relative
 
         finish();
     }
@@ -152,7 +151,7 @@ public class PaycardActivity extends AppCompatActivity {
         mNegativePaycardFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                snipPaycard();
+                wipePaycard();
             }
         });
 
@@ -603,8 +602,8 @@ public class PaycardActivity extends AppCompatActivity {
 
                     return true;
 
-                case R.id.action_paycard_snip:
-                    snipPaycard();
+                case R.id.action_paycard_wipe:
+                    wipePaycard();
 
                     return true;
 

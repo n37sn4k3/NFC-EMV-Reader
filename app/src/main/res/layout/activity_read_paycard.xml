@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/app_compat_activity_main_read_headline"
+                android:id="@+id/activity_read_paycard_headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -46,7 +46,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
 
             <ImageView
-                android:id="@+id/app_compat_activity_main_read_image"
+                android:id="@+id/activity_read_paycard_image"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -57,7 +57,7 @@
                 android:contentDescription="@string/contactless" />
 
             <ProgressBar
-                android:id="@+id/app_compat_activity_main_read_progress"
+                android:id="@+id/activity_read_paycard_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -65,7 +65,7 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/app_compat_activity_main_read_description_waiting_subhead"
+                android:id="@+id/activity_read_paycard_description_waiting_subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -77,7 +77,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
             <TextView
-                android:id="@+id/app_compat_activity_main_read_description_reading_subhead"
+                android:id="@+id/activity_read_paycard_description_reading_subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -95,14 +95,31 @@
                 android:background="#9F9F9F" />
 
             <TextView
-                android:id="@+id/app_compat_activity_main_read_description_subhead"
+                android:id="@+id/activity_read_paycard_description_subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/description_activity_read_paycard"
+                android:textColor="@color/colorPrimary"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="#9F9F9F" />
+
+            <TextView
+                android:id="@+id/activity_read_paycard_nfc_hardware_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/description_activity_read_paycard"
-                android:textColor="@color/colorPrimary"
+                android:text="@string/nfc_hardware_help"
+                android:textColor="#9F9F9F"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
         </LinearLayout>
