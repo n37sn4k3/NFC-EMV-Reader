@@ -1,13 +1,16 @@
 package com.viliyantrbr.nfcemvpayer.activity;
 
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +34,8 @@ import io.realm.Realm;
 public class PaycardActivity extends AppCompatActivity {
     private static final String TAG = PaycardActivity.class.getSimpleName();
 
+    private KeyguardManager mKeyguardManager = null;
+
     private Realm mRealm = null;
 
     private PaycardObject mPaycardObject = null;
@@ -50,7 +55,7 @@ public class PaycardActivity extends AppCompatActivity {
     private TextView mPaycardCardholderNameTextView = null;
 
     private void hostPaycard() {
-        Log.i(TAG, "Host paycard");
+        LogUtil.i(TAG, "Host paycard");
 
         // Host paycard relative
         Intent intent = new Intent(this, HostPaycardActivity.class);
@@ -63,38 +68,93 @@ public class PaycardActivity extends AppCompatActivity {
     }
 
     private void wipePaycard() {
-        Log.i(TAG, "Wipe paycard");
+        LogUtil.i(TAG, "Wipe paycard");
 
-        // Wipe paycard relative
-        boolean hasException = false;
+        DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Wipe paycard relative
+                        boolean hasException = false;
 
-        try {
-            mRealm.beginTransaction();
+                        try {
+                            mRealm.beginTransaction();
 
-            mPaycardObject.deleteFromRealm();
+                            mPaycardObject.deleteFromRealm();
 
-            mRealm.commitTransaction();
-        } catch (Exception e) {
-            hasException = true;
+                            mRealm.commitTransaction();
 
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+                            mRealm.refresh();
+                        } catch (Exception e) {
+                            hasException = true;
 
-            e.printStackTrace();
+                            LogUtil.e(TAG, e.getMessage());
+                            LogUtil.e(TAG, e.toString());
+
+                            e.printStackTrace();
+                        }
+
+                        if (!hasException) {
+                            LogUtil.i(TAG, getString(R.string.paycard_wipe_success));
+
+                            Toast.makeText(PaycardActivity.this, getString(R.string.paycard_wipe_success), Toast.LENGTH_SHORT).show();
+                        } else {
+                            LogUtil.w(TAG, getString(R.string.paycard_wipe_no_success));
+
+                            Toast.makeText(PaycardActivity.this, getString(R.string.paycard_wipe_no_success), Toast.LENGTH_SHORT).show();
+                        }
+                        // - Wipe paycard relative
+
+                        finish();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Wipe Paycard");
+        builder.setMessage("Are you sure you want to wipe out this paycard?");
+        // builder.setPositiveButton(android.R.string.yes, onClickListener).setNegativeButton(android.R.string.no, onClickListener);
+        builder.setPositiveButton(android.R.string.ok, onClickListener).setNegativeButton(android.R.string.cancel, onClickListener);
+        builder.setCancelable(true);
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity result");
+
+        // LogUtil.d(TAG, "Activity result request code: " + requestCode);
+        // LogUtil.d(TAG, "Activity result result code: " + resultCode);
+
+        if (requestCode == 0) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    LogUtil.d(TAG, "Result for request code " + requestCode + ": OK");
+
+                    break;
+
+                case RESULT_CANCELED:
+                    LogUtil.d(TAG, "Result for request code " + requestCode + ": CANCELED");
+
+                    finish();
+
+                    break;
+
+                case RESULT_FIRST_USER:
+                    LogUtil.d(TAG, "Result for request code " + requestCode + ": FIRST USER");
+
+                    break;
+            }
         }
-
-        if (!hasException) {
-            Log.i(TAG, getString(R.string.paycard_wipe_success));
-
-            Toast.makeText(this, getString(R.string.paycard_wipe_success), Toast.LENGTH_SHORT).show();
-        } else {
-            Log.w(TAG, getString(R.string.paycard_wipe_no_success));
-
-            Toast.makeText(this, getString(R.string.paycard_wipe_no_success), Toast.LENGTH_SHORT).show();
-        }
-        // - Wipe paycard relative
-
-        finish();
     }
 
     @Override
@@ -102,9 +162,23 @@ public class PaycardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
 
+        // PAN
         byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
 
         String applicationPanHexadecimal = HexUtil.bytesToHexadecimal(applicationPan);
+
+        String panPreview = null; // Hide the last 4 characters (digits) from the preview (which are part from the unique ones) because of safety reasons
+        if (applicationPanHexadecimal != null) {
+            if (applicationPanHexadecimal.length() > (16 / 4)) {
+                panPreview = applicationPanHexadecimal.substring(0, applicationPanHexadecimal.length() - (16 / 4));
+                panPreview += "****";
+            } else {
+                panPreview = applicationPanHexadecimal;
+            }
+
+            panPreview = panPreview.replaceAll( "....(?!$)", "$0 "); // Avoiding the final (extra) space
+        }
+        // - PAN
 
         if (applicationPanHexadecimal != null) {
             setTitle(applicationPanHexadecimal);
@@ -117,6 +191,38 @@ public class PaycardActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        try {
+            mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
+
+        if (mKeyguardManager != null) {
+            boolean isDeviceOrKeyguardSecure = false;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (mKeyguardManager.isDeviceSecure()) {
+                    isDeviceOrKeyguardSecure = true;
+                }
+            } else {
+                if (mKeyguardManager.isKeyguardSecure()) {
+                    isDeviceOrKeyguardSecure = true;
+                }
+            }
+
+            if (isDeviceOrKeyguardSecure) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Intent intent = mKeyguardManager
+                            .createConfirmDeviceCredentialIntent("Unlock", "Confirm your device unlock in order to view & manage " + (panPreview != null ? panPreview + " paycard." : "this paycard."));
+
+                    startActivityForResult(intent, 0);
+                }
+            }
         }
 
         try {
@@ -239,13 +345,24 @@ public class PaycardActivity extends AppCompatActivity {
         }
 
         if (addDate != null) {
-            try {
-                addDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yy", Locale.getDefault()).format(addDate);
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
+            if (!android.text.format.DateFormat.is24HourFormat(this)) {
+                try {
+                    addDateString = new SimpleDateFormat("hh:mm:ss a dd/MM/yy", Locale.getDefault()).format(addDate);
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
 
-                e.printStackTrace();
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    addDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yy", Locale.getDefault()).format(addDate);
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
             }
 
             mPaycardAddDateTextView.setText(getString(R.string.added) + " / " + getString(R.string.updated) + ": " + (addDateString != null ? addDateString : "N/A"));
@@ -488,10 +605,10 @@ public class PaycardActivity extends AppCompatActivity {
 
         if (mRealm == null || mPaycardObject == null) {
             if (mRealm == null) {
-                Log.w(TAG, "Realm is null");
+                LogUtil.w(TAG, "Realm is null");
             }
             if (mPaycardObject == null) {
-                Log.w(TAG, "PaycardObject is null");
+                LogUtil.w(TAG, "PaycardObject is null");
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -579,6 +696,10 @@ public class PaycardActivity extends AppCompatActivity {
             }
 
             mRealm = null;
+        }
+
+        if (mKeyguardManager != null) {
+            mKeyguardManager = null;
         }
     }
 

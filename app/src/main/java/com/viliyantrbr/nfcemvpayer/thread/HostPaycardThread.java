@@ -1,22 +1,20 @@
 package com.viliyantrbr.nfcemvpayer.thread;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.activity.HostPaycardActivity;
 import com.viliyantrbr.nfcemvpayer.envr.MainEnvr;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
+import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import io.realm.Realm;
@@ -30,7 +28,7 @@ public class HostPaycardThread implements Runnable {
 
     private Context mContext;
 
-    public HostPaycardThread(@NonNull Context context, @NonNull byte[] applicationPan) {
+    public HostPaycardThread(@NonNull Context context) {
         mContext = context;
 
         try {
@@ -43,6 +41,15 @@ public class HostPaycardThread implements Runnable {
         }
 
         if (mRealm != null) {
+            byte[] applicationPan = null;
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pan_var_name), Context.MODE_PRIVATE);
+            String applicationPanHexadecimal = sharedPreferences.getString(context.getString(R.string.pan_var_name), "N/A");
+
+            if (!applicationPanHexadecimal.equals("N/A")) {
+                applicationPan = HexUtil.hexadecimalToBytes(applicationPanHexadecimal);
+            }
+
             try {
                 mPaycardObject = mRealm.where(PaycardObject.class).equalTo(mContext.getString(R.string.pan_var_name), applicationPan).findFirst();
             } catch (Exception e) {
@@ -101,16 +108,22 @@ public class HostPaycardThread implements Runnable {
         // Thread relative
         if (mRealm == null || mPaycardObject == null) {
             if (mRealm == null) {
-                Log.w(TAG, "Realm is null");
+                LogUtil.w(TAG, "Realm is null");
             }
             if (mPaycardObject == null) {
-                Log.w(TAG, "PaycardObject is null");
+                LogUtil.w(TAG, "PaycardObject is null");
             }
 
             this.cannotHostPaycard();
             return;
         }
 
+        /*Intent mPaymentHostApduServiceIntent = new Intent(mContext, PaymentHostApduService.class);
+        mPaymentHostApduServiceIntent.putExtra(mContext.getString(R.string.pan_var_name), mPaycardObject.getApplicationPan());
+
+        // Service(s)
+        mContext.startService(mPaymentHostApduServiceIntent);
+        // - Service(s)*/
         // - Thread relative
 
         // Finalize

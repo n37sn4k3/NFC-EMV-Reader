@@ -3,7 +3,6 @@ package com.viliyantrbr.nfcemvpayer.service;
 import android.content.Intent;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
@@ -256,11 +255,11 @@ public class PaymentHostApduService extends HostApduService {
     public void onDeactivated(int reason) {
         switch (reason) {
             case DEACTIVATION_LINK_LOSS:
-                Log.w(TAG, "Deactivated: Link Loss");
+                LogUtil.w(TAG, "Deactivated: Link Loss");
                 break;
 
             case DEACTIVATION_DESELECTED:
-                Log.w(TAG, "Deactivated: Deselected");
+                LogUtil.w(TAG, "Deactivated: Deselected");
                 break;
         }
 

@@ -70,9 +70,23 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
         if (paycardObject != null) {
             // PAN
-            String panString = HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan());
+            byte[] applicationPan = paycardObject.getApplicationPan();
 
-            viewHolder.paycardPanTextView.setText(panString != null ? panString : "N/A");
+            String applicationPanHexadecimal = HexUtil.bytesToHexadecimal(applicationPan);
+
+            String panPreview = null; // Hide the last 4 characters (digits) from the preview (which are part from the unique ones) because of safety reasons
+            if (applicationPanHexadecimal != null) {
+                if (applicationPanHexadecimal.length() > (16 / 4)) {
+                    panPreview = applicationPanHexadecimal.substring(0, applicationPanHexadecimal.length() - (16 / 4));
+                    panPreview += "****";
+                } else {
+                    panPreview = applicationPanHexadecimal;
+                }
+
+                panPreview = panPreview.replaceAll( "....(?!$)", "$0 "); // Avoiding the final (extra) space
+            }
+
+            viewHolder.paycardPanTextView.setText(panPreview != null ? panPreview : "N/A");
             // - PAN
 
             // Type (image)
@@ -150,13 +164,24 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
             }
 
             if (addDate != null) {
-                try {
-                    addDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yy", Locale.getDefault()).format(addDate);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    System.out.println(e.toString());
+                if (!android.text.format.DateFormat.is24HourFormat(convertView.getContext())) {
+                    try {
+                        addDateString = new SimpleDateFormat("hh:mm:ss a dd/MM/yy", Locale.getDefault()).format(addDate);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        System.out.println(e.toString());
 
-                    e.printStackTrace();
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        addDateString = new SimpleDateFormat("HH:mm:ss dd/MM/yy", Locale.getDefault()).format(addDate);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        System.out.println(e.toString());
+
+                        e.printStackTrace();
+                    }
                 }
 
                 viewHolder.paycardAddDateTextView.setText(addDateString != null ? addDateString : "N/A");

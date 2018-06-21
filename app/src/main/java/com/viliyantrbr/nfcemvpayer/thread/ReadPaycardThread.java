@@ -9,7 +9,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
@@ -1455,7 +1454,7 @@ public class ReadPaycardThread implements Runnable {
         }
 
         if (realm == null) {
-            Log.w(TAG, "Realm is null");
+            LogUtil.w(TAG, "Realm is null");
 
             Toast.makeText(mContext, "Paycard cannot be saved", Toast.LENGTH_SHORT).show();
 
@@ -1516,7 +1515,7 @@ public class ReadPaycardThread implements Runnable {
                 e.printStackTrace();
             }
 
-            Log.w(TAG, "PaycardObject is null");
+            LogUtil.w(TAG, "PaycardObject is null");
 
             Toast.makeText(mContext, "Paycard cannot be saved", Toast.LENGTH_SHORT).show();
 

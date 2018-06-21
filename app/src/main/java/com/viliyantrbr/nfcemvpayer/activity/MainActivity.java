@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mSupportedPaycardsDialog = new Dialog(MainActivity.this);
-                mSupportedPaycardsDialog.setTitle(getString(R.string.supported_paycards));
                 mSupportedPaycardsDialog.setContentView(R.layout.dialog_supported_paycards);
                 mSupportedPaycardsDialog.setCancelable(true);
                 mSupportedPaycardsDialog.show();

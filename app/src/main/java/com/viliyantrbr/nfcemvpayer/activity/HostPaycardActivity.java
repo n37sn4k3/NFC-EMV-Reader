@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
@@ -16,21 +17,27 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
+import com.viliyantrbr.nfcemvpayer.thread.HostPaycardThread;
+import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 public class HostPaycardActivity extends AppCompatActivity {
     private static final String TAG = HostPaycardActivity.class.getSimpleName();
 
+    private byte[] mApplicationPan = null;
+
+    private SharedPreferences mSharedPreferences = null;
+    private SharedPreferences.OnSharedPreferenceChangeListener mOnSharedPreferenceChangeListener = null;
+
     private NfcAdapter mNfcAdapter = null;
 
     private AlertDialog mAlertDialog = null;
 
-    private Intent mPaymentHostApduServiceIntent = null;
+    /*private Intent mPaymentHostApduServiceIntent = null;*/
 
     // Receiver(s)
     // Broadcast intent action(s)
@@ -43,7 +50,7 @@ public class HostPaycardActivity extends AppCompatActivity {
     // - Receiver(s)
 
     private void nfcNotSupported() {
-        Log.w(TAG, "NFC Not Supported");
+        LogUtil.w(TAG, "NFC Not Supported");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC Not Supported");
@@ -64,12 +71,12 @@ public class HostPaycardActivity extends AppCompatActivity {
     }
 
     private void nfcNotEnabled() {
-        Log.w(TAG, "NFC Not Enabled");
+        LogUtil.w(TAG, "NFC Not Enabled");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC Not Enabled");
         builder.setMessage("Enable NFC feature and come back again.");
-        builder.setNeutralButton("Enable NFC", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Enable NFC", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
@@ -91,7 +98,7 @@ public class HostPaycardActivity extends AppCompatActivity {
     }
 
     private void nfcHceNotSupported() {
-        Log.w(TAG, "NFC HCE Not Supported");
+        LogUtil.w(TAG, "NFC HCE Not Supported");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC HCE Not Supported");
@@ -116,7 +123,7 @@ public class HostPaycardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Activity create");
 
-        byte[] applicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
+        mApplicationPan = getIntent().getByteArrayExtra(getString(R.string.pan_var_name));
 
         setContentView(R.layout.activity_host_paycard);
 
@@ -125,6 +132,49 @@ public class HostPaycardActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        try {
+            mSharedPreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
+        try {
+            mOnSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                    if (!sharedPreferences.contains(getString(R.string.pan_var_name)) || !sharedPreferences.getString(getString(R.string.pan_var_name), "N/A").equals(HexUtil.bytesToHexadecimal(mApplicationPan))) {
+                        Toast.makeText(HostPaycardActivity.this, getString(R.string.cannot_host_paycard), Toast.LENGTH_LONG).show();
+
+                        finish(false);
+                    }
+                }
+            };
+        } catch (Exception e) {
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
+
+            e.printStackTrace();
+        }
+
+        if (mSharedPreferences != null) {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            editor.putString(getString(R.string.pan_var_name), HexUtil.bytesToHexadecimal(mApplicationPan));
+            editor.apply();
+        }
+
+        if (mSharedPreferences != null && mOnSharedPreferenceChangeListener != null) {
+            try {
+                mSharedPreferences.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
 
         try {
@@ -169,8 +219,8 @@ public class HostPaycardActivity extends AppCompatActivity {
                 }
             };
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            Log.e(TAG, e.toString());
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
 
             e.printStackTrace();
         }
@@ -216,20 +266,20 @@ public class HostPaycardActivity extends AppCompatActivity {
                 }
             };
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            Log.e(TAG, e.toString());
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
 
             e.printStackTrace();
         }
 
-        mPaymentHostApduServiceIntent = new Intent(this, PaymentHostApduService.class);
+        /*mPaymentHostApduServiceIntent = new Intent(this, PaymentHostApduService.class);
         if (applicationPan != null) {
             mPaymentHostApduServiceIntent.putExtra(getString(R.string.pan_var_name), applicationPan);
         }
 
         // Service(s)
         startService(mPaymentHostApduServiceIntent);
-        // - Service(s)
+        // - Service(s)*/
     }
 
     @Override
@@ -242,8 +292,8 @@ public class HostPaycardActivity extends AppCompatActivity {
             try {
                 mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                Log.e(TAG, e.toString());
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
 
                 e.printStackTrace();
             }
@@ -253,8 +303,8 @@ public class HostPaycardActivity extends AppCompatActivity {
                 try {
                     nfcManager = (NfcManager) getSystemService(NFC_SERVICE);
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                    Log.e(TAG, e.toString());
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
 
                     e.printStackTrace();
                 }
@@ -264,8 +314,8 @@ public class HostPaycardActivity extends AppCompatActivity {
                     try {
                         mNfcAdapter = nfcManager.getDefaultAdapter();
                     } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                        Log.e(TAG, e.toString());
+                        LogUtil.e(TAG, e.getMessage());
+                        LogUtil.e(TAG, e.toString());
 
                         e.printStackTrace();
                     }
@@ -302,9 +352,9 @@ public class HostPaycardActivity extends AppCompatActivity {
         } else {
             nfcHceNotSupported();
         }
-    }
 
-    // runOnUiThread(new HostPaycardThread(this, mApplicationPan)); // Run on POS tap
+        runOnUiThread(new HostPaycardThread(this));
+    }
 
     @Override
     protected void onStop() {
@@ -342,9 +392,13 @@ public class HostPaycardActivity extends AppCompatActivity {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Activity destroy");
 
-        // Service(s)
+        /*// Service(s)
         stopService(mPaymentHostApduServiceIntent);
         // - Service(s)
+
+        if (mPaymentHostApduServiceIntent != null) {
+            mPaymentHostApduServiceIntent = null;
+        }*/
 
         if (mCannotHostPaycardCustomReceiver != null) {
             mCannotHostPaycardCustomReceiver = null;
@@ -361,6 +415,35 @@ public class HostPaycardActivity extends AppCompatActivity {
             mNfcAdapter = null;
         }
 
+        if (mSharedPreferences != null && mOnSharedPreferenceChangeListener != null) {
+            try {
+                mSharedPreferences.unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        }
+
+        if (mSharedPreferences != null) {
+            SharedPreferences.Editor editor = mSharedPreferences.edit();
+            // editor.putString(getString(R.string.pan_var_name), "N/A");
+            editor.remove(getString(R.string.pan_var_name));
+            editor.apply();
+        }
+
+        if (mOnSharedPreferenceChangeListener != null) {
+            mOnSharedPreferenceChangeListener = null;
+        }
+        if (mSharedPreferences != null) {
+            mSharedPreferences = null;
+        }
+
+        if (mApplicationPan != null) {
+            mApplicationPan = null;
+        }
+
         System.gc(); // All done, recycle unused objects (mainly because of thread)
     }
 
@@ -370,6 +453,8 @@ public class HostPaycardActivity extends AppCompatActivity {
         // Incoming context is from the receiver; using activity context is better option here
 
         // Receiver Relative
+        Toast.makeText(this, getString(R.string.success_host_paycard), Toast.LENGTH_LONG).show();
+
         finish(false);
         // - Receiver Relative
     }

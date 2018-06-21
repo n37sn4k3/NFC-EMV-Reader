@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#EFEFEF"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.viliyantrbr.nfcemvpayer.activity.PaycardActivity"
     tools:showIn="@layout/activity_paycard">
@@ -23,7 +23,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="Paycard type (text)"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:fontFamily="@font/ocr_a" />
 
@@ -43,7 +43,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="@string/aid"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="Exp Date"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="Add Date"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -79,7 +79,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="@string/application_label"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:visibility="gone" />
 
@@ -92,14 +92,14 @@
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:text="@string/cardholder_name"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.6dp"
-            android:background="@color/white"
+            android:background="#9F9F9F"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin" />
 

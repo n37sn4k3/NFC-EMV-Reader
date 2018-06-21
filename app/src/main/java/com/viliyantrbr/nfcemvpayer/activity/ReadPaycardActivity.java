@@ -17,7 +17,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.viliyantrbr.nfcemvpayer.R;
@@ -42,7 +41,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
     // - Receiver(s)
 
     private void nfcNotSupported() {
-        Log.w(TAG, "NFC Not Supported");
+        LogUtil.w(TAG, "NFC Not Supported");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC Not Supported");
@@ -63,12 +62,12 @@ public class ReadPaycardActivity extends AppCompatActivity {
     }
 
     private void nfcNotEnabled() {
-        Log.w(TAG, "NFC Not Enabled");
+        LogUtil.w(TAG, "NFC Not Enabled");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("NFC Not Enabled");
         builder.setMessage("Enable NFC feature and come back again.");
-        builder.setNeutralButton("Enable NFC", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Enable NFC", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
@@ -152,8 +151,8 @@ public class ReadPaycardActivity extends AppCompatActivity {
                 }
             };
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            Log.e(TAG, e.toString());
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
 
             e.printStackTrace();
         }
@@ -199,8 +198,8 @@ public class ReadPaycardActivity extends AppCompatActivity {
                 }
             };
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-            Log.e(TAG, e.toString());
+            LogUtil.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.toString());
 
             e.printStackTrace();
         }
@@ -216,8 +215,8 @@ public class ReadPaycardActivity extends AppCompatActivity {
             try {
                 mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                Log.e(TAG, e.toString());
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
 
                 e.printStackTrace();
             }
@@ -227,8 +226,8 @@ public class ReadPaycardActivity extends AppCompatActivity {
                 try {
                     nfcManager = (NfcManager) getSystemService(NFC_SERVICE);
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                    Log.e(TAG, e.toString());
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
 
                     e.printStackTrace();
                 }
@@ -238,8 +237,8 @@ public class ReadPaycardActivity extends AppCompatActivity {
                     try {
                         mNfcAdapter = nfcManager.getDefaultAdapter();
                     } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
-                        Log.e(TAG, e.toString());
+                        LogUtil.e(TAG, e.getMessage());
+                        LogUtil.e(TAG, e.toString());
 
                         e.printStackTrace();
                     }
@@ -252,7 +251,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
                 nfcNotEnabled();
             } else if (mNfcAdapter.isEnabled()) {
                 // Activity relative
-                Log.d(TAG, "Enabling reader mode...");
+                LogUtil.d(TAG, "Enabling reader mode...");
 
                 // "Enable reader mode" (with NFC-A (ISO 14443-3A), NFC-B (ISO 14443-3B) reader flags (enumerated in ISO-DEP))
                 mNfcAdapter.enableReaderMode(this, mReaderCallback, NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_NFC_B, null);
@@ -286,7 +285,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
             if (mNfcAdapter != null) {
                 if (mNfcAdapter.isEnabled()) {
                     // Activity relative
-                    Log.d(TAG, "Disabling reader mode...");
+                    LogUtil.d(TAG, "Disabling reader mode...");
 
                     // Unregister (deregister) read paycard receiver(s) from thread
                     if (mCannotReadPaycardCustomReceiver != null) {
