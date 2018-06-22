@@ -91,13 +91,13 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
             // Type (image)
             if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000041010)) {
-                viewHolder.paycardTypeImageView.setImageResource(R.drawable.card_mastercard);
+                viewHolder.paycardTypeImageView.setImageResource(R.drawable.icon_mastercard);
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000043060)) {
-                viewHolder.paycardTypeImageView.setImageResource(R.drawable.card_maestro);
+                viewHolder.paycardTypeImageView.setImageResource(R.drawable.icon_maestro);
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000031010)) {
-                viewHolder.paycardTypeImageView.setImageResource(R.drawable.card_visa);
+                viewHolder.paycardTypeImageView.setImageResource(R.drawable.icon_visa);
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000032010)) {
-                viewHolder.paycardTypeImageView.setImageResource(R.drawable.card_visa_electron);
+                viewHolder.paycardTypeImageView.setImageResource(R.drawable.icon_visa_electron);
             } else {
                 // TODO: Default paycard image
             }

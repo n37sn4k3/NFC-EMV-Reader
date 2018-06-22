@@ -286,13 +286,13 @@ public class PaycardActivity extends AppCompatActivity {
 
         // Type (image)
         if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000041010)) {
-            mPaycardTypeImageView.setImageResource(R.drawable.card_mastercard);
+            mPaycardTypeImageView.setImageResource(R.drawable.icon_mastercard);
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000043060)) {
-            mPaycardTypeImageView.setImageResource(R.drawable.card_maestro);
+            mPaycardTypeImageView.setImageResource(R.drawable.icon_maestro);
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000031010)) {
-            mPaycardTypeImageView.setImageResource(R.drawable.card_visa);
+            mPaycardTypeImageView.setImageResource(R.drawable.icon_visa);
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000032010)) {
-            mPaycardTypeImageView.setImageResource(R.drawable.card_visa_electron);
+            mPaycardTypeImageView.setImageResource(R.drawable.icon_visa_electron);
         } else {
             // TODO: Default paycard image
         }

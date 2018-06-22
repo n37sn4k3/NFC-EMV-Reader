@@ -54,7 +54,7 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:text="Exp Date"
+            android:text="Exp. Date"
             android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
@@ -66,7 +66,7 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:text="Add Date"
+            android:text="Added / Updated"
             android:textColor="@color/colorPrimary"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

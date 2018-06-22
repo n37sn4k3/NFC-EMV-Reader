@@ -242,6 +242,7 @@ public class ReadPaycardActivity extends AppCompatActivity {
 
                         e.printStackTrace();
                     }
+                    // - Try to get the NFC adapter alternatively
                 }
             }
 

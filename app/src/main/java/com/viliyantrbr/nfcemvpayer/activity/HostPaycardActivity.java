@@ -1,6 +1,7 @@
 package com.viliyantrbr.nfcemvpayer.activity;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,10 +10,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcManager;
+import android.nfc.cardemulation.CardEmulation;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +38,8 @@ public class HostPaycardActivity extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter = null;
 
+    private CardEmulation mCardEmulation = null;
+
     private AlertDialog mAlertDialog = null;
 
     /*private Intent mPaymentHostApduServiceIntent = null;*/
@@ -48,6 +53,20 @@ public class HostPaycardActivity extends AppCompatActivity {
     private BroadcastReceiver mSuccessHostPaycardCustomReceiver = null;
     private BroadcastReceiver mCannotHostPaycardCustomReceiver = null;
     // - Receiver(s)
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setAsPreferredHceService() {
+        if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
+            mCardEmulation.setPreferredService(this, new ComponentName(this, PaymentHostApduService.class));
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public void unsetAsPreferredHceService() {
+        if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
+            mCardEmulation.unsetPreferredService(this);
+        }
+    }
 
     private void nfcNotSupported() {
         LogUtil.w(TAG, "NFC Not Supported");
@@ -319,6 +338,7 @@ public class HostPaycardActivity extends AppCompatActivity {
 
                         e.printStackTrace();
                     }
+                    // - Try to get the NFC adapter alternatively
                 }
             }
 
@@ -328,6 +348,14 @@ public class HostPaycardActivity extends AppCompatActivity {
                 nfcNotEnabled();
             } else if (mNfcAdapter.isEnabled()) {
                 // Activity relative
+                try {
+                    mCardEmulation = CardEmulation.getInstance(mNfcAdapter);
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
                 // - Activity relative
             }
         } else {
@@ -354,6 +382,26 @@ public class HostPaycardActivity extends AppCompatActivity {
         }
 
         runOnUiThread(new HostPaycardThread(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity resume");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setAsPreferredHceService();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtil.d(TAG, "\"" + TAG + "\": Activity pause");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            unsetAsPreferredHceService();
+        }
     }
 
     @Override
@@ -409,6 +457,10 @@ public class HostPaycardActivity extends AppCompatActivity {
 
         if (mAlertDialog != null) {
             mAlertDialog = null;
+        }
+
+        if (mCardEmulation != null) {
+            mCardEmulation = null;
         }
 
         if (mNfcAdapter != null) {
