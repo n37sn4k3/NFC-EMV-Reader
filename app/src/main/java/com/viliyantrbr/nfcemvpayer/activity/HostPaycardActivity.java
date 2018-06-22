@@ -54,20 +54,6 @@ public class HostPaycardActivity extends AppCompatActivity {
     private BroadcastReceiver mCannotHostPaycardCustomReceiver = null;
     // - Receiver(s)
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setAsPreferredHceService() {
-        if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
-            mCardEmulation.setPreferredService(this, new ComponentName(this, PaymentHostApduService.class));
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public void unsetAsPreferredHceService() {
-        if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
-            mCardEmulation.unsetPreferredService(this);
-        }
-    }
-
     private void nfcNotSupported() {
         LogUtil.w(TAG, "NFC Not Supported");
 
@@ -390,7 +376,9 @@ public class HostPaycardActivity extends AppCompatActivity {
         LogUtil.d(TAG, "\"" + TAG + "\": Activity resume");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setAsPreferredHceService();
+            if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
+                mCardEmulation.setPreferredService(this, new ComponentName(this, PaymentHostApduService.class));
+            }
         }
     }
 
@@ -400,7 +388,9 @@ public class HostPaycardActivity extends AppCompatActivity {
         LogUtil.d(TAG, "\"" + TAG + "\": Activity pause");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            unsetAsPreferredHceService();
+            if (mCardEmulation != null && mCardEmulation.categoryAllowsForegroundPreference(CardEmulation.CATEGORY_PAYMENT)) {
+                mCardEmulation.unsetPreferredService(this);
+            }
         }
     }
 
