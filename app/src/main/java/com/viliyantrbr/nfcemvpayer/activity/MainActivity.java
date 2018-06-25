@@ -17,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.adapter.TabLayoutFragmentPagerAdapter;
@@ -31,8 +33,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Button mCustomToolbarSupportedPaycardsButton = null;
-
     private Dialog mSupportedPaycardsDialog = null;
 
     @Override
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCustomToolbarSupportedPaycardsButton = findViewById(R.id.custom_toolbar_supported_paycards_button);
-        mCustomToolbarSupportedPaycardsButton.setOnClickListener(new View.OnClickListener() {
+        Button customToolbarSupportedPaycardsButton = findViewById(R.id.custom_toolbar_supported_paycards_button);
+        customToolbarSupportedPaycardsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSupportedPaycardsDialog = new Dialog(MainActivity.this);
@@ -196,10 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (mSupportedPaycardsDialog != null) {
             mSupportedPaycardsDialog = null;
-        }
-
-        if (mCustomToolbarSupportedPaycardsButton != null) {
-            mCustomToolbarSupportedPaycardsButton = null;
         }
     }
 

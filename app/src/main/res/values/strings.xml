@@ -3,6 +3,7 @@
     <string name="app_name">NFC EMV Payer</string>
 
     <string name="custom_toolbar_logo">Custom toolbar logo</string>
+    <string name="custom_toolbar_icon_settings">Custom toolbar icon settings</string>
 
     <string name="action_settings">Settings</string>
 
