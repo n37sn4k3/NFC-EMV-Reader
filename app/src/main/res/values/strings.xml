@@ -2,8 +2,17 @@
 <resources>
     <string name="app_name">NFC EMV Payer</string>
 
+    <!-- Receiver -->
+    <string name="receiver">Receiver</string>
+    <string name="additional_receiver">Additional receiver</string>
+    <!-- - Receiver -->
+
+    <!-- Service -->
+    <string name="service">Service</string>
+    <string name="additional_service">Additional service</string>
+    <!-- - Service -->
+
     <string name="custom_toolbar_logo">Custom toolbar logo</string>
-    <string name="custom_toolbar_icon_settings">Custom toolbar icon settings</string>
 
     <string name="action_settings">Settings</string>
 

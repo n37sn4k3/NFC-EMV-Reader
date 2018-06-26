@@ -67,6 +67,11 @@
                 android:name="android.nfc.cardemulation.host_apdu_service"
                 android:resource="@xml/apduservice" />
         </service>
+
+        <service android:name=".service.LocationService"
+            android:label="@string/service"
+            android:description="@string/additional_service" />
+
     </application>
 
 </manifest>
