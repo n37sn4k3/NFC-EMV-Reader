@@ -24,6 +24,7 @@ import com.viliyantrbr.nfcemvpayer.util.EmvUtil;
 import com.viliyantrbr.nfcemvpayer.util.GacUtil;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 import com.viliyantrbr.nfcemvpayer.util.PseUtil;
 import com.viliyantrbr.nfcemvpayer.util.TlvUtil;
@@ -34,6 +35,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 
 public class ReadPaycardThread implements Runnable {
@@ -1442,15 +1444,34 @@ public class ReadPaycardThread implements Runnable {
 
         boolean isNew = false;
 
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(mContext);
+        // - Get encryption key
+
         // Realm paycard data (add/update)
         Realm realm = null;
-        try {
-            realm = Realm.getDefaultInstance();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
 
-            e.printStackTrace();
+            try {
+                realm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                realm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
 
         if (realm == null) {

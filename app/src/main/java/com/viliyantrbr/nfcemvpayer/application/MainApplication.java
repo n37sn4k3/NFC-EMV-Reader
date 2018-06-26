@@ -3,7 +3,7 @@ package com.viliyantrbr.nfcemvpayer.application;
 import android.app.Application;
 import android.content.ComponentCallbacks2;
 
-import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.io.File;
@@ -13,7 +13,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 public class MainApplication extends Application {
     private static final String TAG = MainApplication.class.getSimpleName();
@@ -36,43 +35,64 @@ public class MainApplication extends Application {
 
         sPackageName = getPackageName();
 
-        // Encryption key
-        byte[] encryptionKey = null;
+        // Application relative
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(this);
+        // - Get encryption key
 
-        KeyGenerator aesKeyGenerator = null;
-        try {
-            aesKeyGenerator = KeyGenerator.getInstance("AES");
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        if (getEncryptionKey == null) {
+            boolean putEncryptionKeyOk = false;
 
-            e.printStackTrace();
+            // Put encryption key
+            byte[] putEncryptionKey = null;
+
+            KeyGenerator aesKeyGenerator = null;
+            try {
+                aesKeyGenerator = KeyGenerator.getInstance("AES");
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+
+            if (aesKeyGenerator != null) {
+                aesKeyGenerator.init(512, new SecureRandom());
+
+                SecretKey secretKey = aesKeyGenerator.generateKey();
+
+                putEncryptionKey = secretKey.getEncoded(); // AES key length (bytes): 512 / 8 = 64 (Encoded)
+            }
+
+            if (putEncryptionKey != null) {
+                putEncryptionKeyOk = KeyUtil.putEncryptionKey(this, putEncryptionKey);
+            }
+            // - Put encryption key
+
+            if (putEncryptionKeyOk) {
+                getEncryptionKey = putEncryptionKey;
+            }
         }
-
-        if (aesKeyGenerator != null) {
-            aesKeyGenerator.init(512, new SecureRandom());
-
-            SecretKey secretKey = aesKeyGenerator.generateKey();
-
-            encryptionKey = secretKey.getEncoded(); // AES key length (bytes): 512 / 8 (Encoded)
-        }
-
-        if (encryptionKey != null) {
-            LogUtil.d(TAG, "Encryption key: " + HexUtil.bytesToHexadecimal(encryptionKey));
-        }
-        // - Encryption key
 
         // Realm
         Realm.init(this);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                /*.encryptionKey(encryptionKey)*/
-                .build();
+        /*RealmConfiguration realmConfiguration = null;
+
+        if (getEncryptionKey != null) {
+            realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+        } else {
+            realmConfiguration = new RealmConfiguration.Builder()
+                    .build();
+        }
 
         if (realmConfiguration != null) {
             Realm.setDefaultConfiguration(realmConfiguration);
-        }
+        }*/
         // - Realm
+        // - Application relative
     }
 
     @Override

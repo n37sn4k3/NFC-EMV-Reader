@@ -1,10 +1,6 @@
 package com.viliyantrbr.nfcemvpayer.envr;
 
 public class MainEnvr {
-    // Application relative
-    public static final long READ_PAYCARD_VIBE_TIME = 200, HOST_PAYCARD_VIBE_TIME = 200; // milliseconds
-    // - Application relative
-
     // Logging
     public static final boolean LOG_V = true; // Verbose
     public static final boolean LOG_D = true; // Debug
@@ -14,4 +10,8 @@ public class MainEnvr {
 
     public static final boolean LOG_WTF = true; // What a Terrible Failure
     // - Logging
+
+    // Application relative
+    public static final long READ_PAYCARD_VIBE_TIME = 200, HOST_PAYCARD_VIBE_TIME = 200; // milliseconds
+    // - Application relative
 }

@@ -64,12 +64,6 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
                     intent.putExtra(view.getContext().getString(R.string.pan_var_name), paycardObject.getApplicationPan());
                 }
 
-                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
-                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
-                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
-                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
-
-
                 view.getContext().startActivity(intent);
             }
         });

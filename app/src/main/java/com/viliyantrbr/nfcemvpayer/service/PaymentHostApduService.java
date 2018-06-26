@@ -8,11 +8,13 @@ import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.util.Arrays;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class PaymentHostApduService extends HostApduService {
     private static final String TAG = PaymentHostApduService.class.getSimpleName();
@@ -52,14 +54,35 @@ public class PaymentHostApduService extends HostApduService {
         super.onCreate();
         LogUtil.d(TAG, "\"" + TAG + "\": Service create");
 
-        try {
-            mRealm = Realm.getDefaultInstance();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(this);
+        // - Get encryption key
 
-            e.printStackTrace();
+        // Realm
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+
+            try {
+                mRealm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                mRealm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
+        // - Realm
     }
 
     @Override

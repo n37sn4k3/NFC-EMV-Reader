@@ -13,11 +13,12 @@ import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.activity.HostPaycardActivity;
 import com.viliyantrbr.nfcemvpayer.envr.MainEnvr;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
-import com.viliyantrbr.nfcemvpayer.service.PaymentHostApduService;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class HostPaycardThread implements Runnable {
     private static final String TAG = HostPaycardThread.class.getSimpleName();
@@ -31,19 +32,40 @@ public class HostPaycardThread implements Runnable {
     public HostPaycardThread(@NonNull Context context) {
         mContext = context;
 
-        try {
-            mRealm = Realm.getDefaultInstance();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(mContext);
+        // - Get encryption key
 
-            e.printStackTrace();
+        // Realm
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+
+            try {
+                mRealm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                mRealm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
+        // - Realm
 
         if (mRealm != null) {
             byte[] applicationPan = null;
 
-            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pan_var_name), Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences(context.getString(R.string.pan_var_name), Context.MODE_PRIVATE);
             String applicationPanHexadecimal = sharedPreferences.getString(context.getString(R.string.pan_var_name), "N/A");
 
             if (!applicationPanHexadecimal.equals("N/A")) {

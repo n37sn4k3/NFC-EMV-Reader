@@ -22,6 +22,7 @@ import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
 import com.viliyantrbr.nfcemvpayer.util.AidUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class PaycardActivity extends AppCompatActivity {
     private static final String TAG = PaycardActivity.class.getSimpleName();
@@ -225,14 +227,35 @@ public class PaycardActivity extends AppCompatActivity {
             }
         }
 
-        try {
-            mRealm = Realm.getDefaultInstance();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(this);
+        // - Get encryption key
 
-            e.printStackTrace();
+        // Realm
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+
+            try {
+                mRealm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                mRealm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
+        // - Realm
 
         if (mRealm != null) {
             try {

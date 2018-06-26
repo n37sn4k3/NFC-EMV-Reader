@@ -236,7 +236,7 @@ public class LocationService extends Service {
 
     @SuppressLint("MissingPermission")
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    public void requestSingleUpdate(String provider) {
+    public void requestSingleUpdate(@Nullable String provider) {
         if (mLocationManager == null || mLocationListener == null || provider == null) {
             LogUtil.w(TAG, "Cannot request single update with specified provider");
 
@@ -268,7 +268,7 @@ public class LocationService extends Service {
 
     @SuppressLint("MissingPermission")
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    public void requestLocationUpdates(String provider, long minTime, float minDistance) {
+    public void requestLocationUpdates(@Nullable String provider, long minTime, float minDistance) {
         if (mLocationManager == null || mLocationListener == null || provider == null) {
             LogUtil.w(TAG, "Cannot request location updates with specified provider, time and distance");
 
@@ -300,7 +300,7 @@ public class LocationService extends Service {
 
     @SuppressLint("MissingPermission")
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    public void requestSingleUpdate(Criteria criteria, boolean enabledOnly) {
+    public void requestSingleUpdate(@Nullable Criteria criteria, boolean enabledOnly) {
         if (mLocationManager == null || mLocationListener == null || criteria == null) {
             LogUtil.w(TAG, "Cannot request single update with criteria best provider");
 
@@ -334,7 +334,7 @@ public class LocationService extends Service {
 
     @SuppressLint("MissingPermission")
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    public void requestLocationUpdates(Criteria criteria, boolean enabledOnly, long minTime, float minDistance) {
+    public void requestLocationUpdates(@Nullable Criteria criteria, boolean enabledOnly, long minTime, float minDistance) {
         if (mLocationManager == null || mLocationListener == null || criteria == null) {
             LogUtil.w(TAG, "Cannot request location updates with criteria best provider, time and distance");
 
@@ -368,7 +368,7 @@ public class LocationService extends Service {
 
     @SuppressLint("MissingPermission")
     @RequiresPermission(allOf = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-    public Location getLastKnownLocation(String provider) {
+    public Location getLastKnownLocation(@Nullable String provider) {
         if (mLocationManager == null || provider == null) {
             LogUtil.w(TAG, "Cannot get last known location");
 

@@ -17,11 +17,13 @@ import com.viliyantrbr.nfcemvpayer.activity.ReadPaycardActivity;
 import com.viliyantrbr.nfcemvpayer.adapter.PaycardItemCustomArrayAdapter;
 import com.viliyantrbr.nfcemvpayer.adapter.TabLayoutFragmentPagerAdapter;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
+import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
 import com.viliyantrbr.nfcemvpayer.util.LogUtil;
 
 import java.util.Objects;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPagerAdapter.ITabLayoutFragmentPagerAdapter {
@@ -49,7 +51,7 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
         } else {
             return getActivity();
         }
-    } // For usage as context
+    } // For usage as context; Objects.requireNonNull(object) - "Throws NullPointerException" if the object is null
 
     private void updateXml() {
         if (mPaycardObjectRealmResults != null) {
@@ -99,23 +101,37 @@ public class PaycardsTabFragment extends Fragment implements TabLayoutFragmentPa
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "\"" + TAG + "\": Fragment create");
 
-        try {
-            mPageTitle = getString(R.string.paycards);
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
+        mPageTitle = getString(R.string.paycards);
 
-            e.printStackTrace();
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(getFragmentActivity(true));
+        // - Get encryption key
+
+        // Realm
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+
+            try {
+                mRealm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                mRealm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
         }
-
-        try {
-            mRealm = Realm.getDefaultInstance();
-        } catch (Exception e) {
-            LogUtil.e(TAG, e.getMessage());
-            LogUtil.e(TAG, e.toString());
-
-            e.printStackTrace();
-        }
+        // - Realm
     }
 
     @Override
