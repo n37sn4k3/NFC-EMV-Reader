@@ -7,8 +7,8 @@
 <img src="https://i.imgur.com/1pAQvwc.png" width="280" /> <img src="https://i.imgur.com/OjrmDOK.png" width="280" />
 
 ## Application Features
-* Paycard read **(In Development)**
-* Paycard host (emulation) **(In Development)**
+* Paycard read **(In Development, Almost Ready)**
+* Paycard host (emulation) **(In Development, Almost Ready)**
 * Encrypted multiple paycards storing
 
 ## Supported EMV Paycards
