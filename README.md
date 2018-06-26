@@ -1,5 +1,5 @@
 # NFC-EMV-Payer
-(Unreleased, In Development) Android Java written application which reads and extracts contactless EMV paycard data, stores it into an encrypted Realm database, and emulates it to a payment terminal.
+(Unreleased, In Development) Android Java written application which reads and extracts contactless EMV paycard data using NFC, stores it into an encrypted Realm database, and emulates it to a payment terminal.
 
 ## Screenshots
 <img src="https://i.imgur.com/1JRuH8e.png" width="280" /> <img src="https://i.imgur.com/r5wuVcH.png" width="280" /> <img src="https://i.imgur.com/VMAMoHP.png" width="280" />
@@ -7,8 +7,8 @@
 <img src="https://i.imgur.com/1pAQvwc.png" width="280" /> <img src="https://i.imgur.com/OjrmDOK.png" width="280" />
 
 ## Application Features
-* Paycard read **(In Development)**
-* Paycard host (emulation) **(In Development)**
+* Paycard read **(In Development, Almost Ready)**
+* Paycard host (emulation) **(In Development, Almost Ready)**
 * Encrypted multiple paycards storing
 
 ## Supported EMV Paycards
@@ -24,11 +24,12 @@
 * HCE feature (for "Paycard host (emulation)" feature)
 
 ## Technical information
-* Compile SDK Version: 27
-* Build Tools Version: 27.1.1
+* Compile SDK Version: 28
+* Build Tools Version: 28.0.0-alpha3
 * Min SDK Version: 19
-* Target SDK Version: 27
-* Realm Mobile Database Version: 5.0.0
+* Target SDK Version: 28
+* Gradle Version: 3.1.3
+* Realm Mobile Database Version: 5.3.0
 * IDE used for development: Android Studio (recommended)
 
 ## Manifest permission(s) / Also runtime requested /
@@ -46,6 +47,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Not used, declarated only -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- Not used, declarated only -->
+    
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     
     <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>
