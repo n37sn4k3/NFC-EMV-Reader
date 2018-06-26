@@ -51,22 +51,28 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
             viewHolder.paycardExpDateTextView = convertView.findViewById(R.id.item_paycard_exp_date);
             viewHolder.paycardAddDateTextView = convertView.findViewById(R.id.item_paycard_add_date);
 
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), PaycardActivity.class);
-                    if (paycardObject != null) {
-                        intent.putExtra(view.getContext().getString(R.string.pan_var_name), paycardObject.getApplicationPan());
-                    }
-
-                    view.getContext().startActivity(intent);
-                }
-            });
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), PaycardActivity.class);
+                if (paycardObject != null) {
+                    intent.putExtra(view.getContext().getString(R.string.pan_var_name), paycardObject.getApplicationPan());
+                }
+
+                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
+                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
+                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
+                System.out.println(HexUtil.bytesToHexadecimal(paycardObject.getApplicationPan()));
+
+
+                view.getContext().startActivity(intent);
+            }
+        });
 
         if (paycardObject != null) {
             // PAN
