@@ -41,8 +41,6 @@ public class HostPaycardActivity extends AppCompatActivity {
 
     private AlertDialog mAlertDialog = null;
 
-    /*private Intent mPaymentHostApduServiceIntent = null;*/
-
     // Receiver(s)
     // Broadcast intent action(s)
     public static final String ACTION_SUCCESS_HOST_PAYCARD_BROADCAST = TAG + "SuccessBroadcastIntentAction";
@@ -150,11 +148,21 @@ public class HostPaycardActivity extends AppCompatActivity {
             mOnSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                    LogUtil.d(TAG, "Shared preference changed");
+
+                    LogUtil.i(TAG, "Shared preference changed: " + s);
+
+                    // Shared preference changed relative
+                    if (sharedPreferences.contains(getString(R.string.pan_var_name))) {
+                        LogUtil.i(TAG, getString(R.string.pan_var_name) + ": " + sharedPreferences.getString(getString(R.string.pan_var_name), "N/A"));
+                    }
+
                     if (!sharedPreferences.contains(getString(R.string.pan_var_name)) || !sharedPreferences.getString(getString(R.string.pan_var_name), "N/A").equals(HexUtil.bytesToHexadecimal(mApplicationPan))) {
                         Toast.makeText(HostPaycardActivity.this, getString(R.string.cannot_host_paycard), Toast.LENGTH_LONG).show();
 
                         finish(false);
                     }
+                    // - Shared preference changed relative
                 }
             };
         } catch (Exception e) {
@@ -165,20 +173,20 @@ public class HostPaycardActivity extends AppCompatActivity {
         }
 
         if (mSharedPreferences != null) {
+            if (mOnSharedPreferenceChangeListener != null) {
+                try {
+                    mSharedPreferences.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
+            }
+
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             editor.putString(getString(R.string.pan_var_name), HexUtil.bytesToHexadecimal(mApplicationPan));
             editor.apply();
-        }
-
-        if (mSharedPreferences != null && mOnSharedPreferenceChangeListener != null) {
-            try {
-                mSharedPreferences.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
         }
 
         try {
@@ -276,14 +284,7 @@ public class HostPaycardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*mPaymentHostApduServiceIntent = new Intent(this, PaymentHostApduService.class);
-        if (applicationPan != null) {
-            mPaymentHostApduServiceIntent.putExtra(getString(R.string.pan_var_name), applicationPan);
-        }
-
-        // Service(s)
-        startService(mPaymentHostApduServiceIntent);
-        // - Service(s)*/
+        runOnUiThread(new HostPaycardThread(this));
     }
 
     @Override
@@ -365,8 +366,6 @@ public class HostPaycardActivity extends AppCompatActivity {
         } else {
             nfcHceNotSupported();
         }
-
-        runOnUiThread(new HostPaycardThread(this));
     }
 
     @Override
@@ -429,14 +428,6 @@ public class HostPaycardActivity extends AppCompatActivity {
         super.onDestroy();
         LogUtil.d(TAG, "\"" + TAG + "\": Activity destroy");
 
-        /*// Service(s)
-        stopService(mPaymentHostApduServiceIntent);
-        // - Service(s)
-
-        if (mPaymentHostApduServiceIntent != null) {
-            mPaymentHostApduServiceIntent = null;
-        }*/
-
         if (mCannotHostPaycardCustomReceiver != null) {
             mCannotHostPaycardCustomReceiver = null;
         }
@@ -456,22 +447,22 @@ public class HostPaycardActivity extends AppCompatActivity {
             mNfcAdapter = null;
         }
 
-        if (mSharedPreferences != null && mOnSharedPreferenceChangeListener != null) {
-            try {
-                mSharedPreferences.unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
-        }
-
         if (mSharedPreferences != null) {
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             // editor.putString(getString(R.string.pan_var_name), "N/A");
             editor.remove(getString(R.string.pan_var_name));
             editor.apply();
+
+            if (mOnSharedPreferenceChangeListener != null) {
+                try {
+                    mSharedPreferences.unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
+            }
         }
 
         if (mOnSharedPreferenceChangeListener != null) {

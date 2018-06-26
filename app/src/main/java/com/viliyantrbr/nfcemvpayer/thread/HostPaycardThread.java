@@ -23,64 +23,12 @@ import io.realm.RealmConfiguration;
 public class HostPaycardThread implements Runnable {
     private static final String TAG = HostPaycardThread.class.getSimpleName();
 
-    private Realm mRealm = null;
-
     private PaycardObject mPaycardObject = null;
 
     private Context mContext;
 
     public HostPaycardThread(@NonNull Context context) {
         mContext = context;
-
-        // Get encryption key
-        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(mContext);
-        // - Get encryption key
-
-        // Realm
-        if (getEncryptionKey != null) {
-            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                    .encryptionKey(getEncryptionKey)
-                    .build();
-
-            try {
-                mRealm = Realm.getInstance(realmConfiguration);
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                mRealm = Realm.getDefaultInstance();
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
-        }
-        // - Realm
-
-        if (mRealm != null) {
-            byte[] applicationPan = null;
-
-            SharedPreferences sharedPreferences = mContext.getSharedPreferences(context.getString(R.string.pan_var_name), Context.MODE_PRIVATE);
-            String applicationPanHexadecimal = sharedPreferences.getString(context.getString(R.string.pan_var_name), "N/A");
-
-            if (!applicationPanHexadecimal.equals("N/A")) {
-                applicationPan = HexUtil.hexadecimalToBytes(applicationPanHexadecimal);
-            }
-
-            try {
-                mPaycardObject = mRealm.where(PaycardObject.class).equalTo(mContext.getString(R.string.pan_var_name), applicationPan).findFirst();
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
-        }
 
         Vibrator vibrator = null;
         try {
@@ -128,8 +76,59 @@ public class HostPaycardThread implements Runnable {
         LogUtil.d(TAG, "\"" + TAG + "\": Thread run");
 
         // Thread relative
-        if (mRealm == null || mPaycardObject == null) {
-            if (mRealm == null) {
+        // Get encryption key
+        byte[] getEncryptionKey = KeyUtil.getEncryptionKey(mContext);
+        // - Get encryption key
+
+        Realm realm = null;
+        if (getEncryptionKey != null) {
+            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(getEncryptionKey)
+                    .build();
+
+            try {
+                realm = Realm.getInstance(realmConfiguration);
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                realm = Realm.getDefaultInstance();
+            } catch (Exception e) {
+                LogUtil.e(TAG, e.getMessage());
+                LogUtil.e(TAG, e.toString());
+
+                e.printStackTrace();
+            }
+        }
+
+        if (realm != null) {
+            byte[] applicationPan = null;
+
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getString(R.string.app_name), Context.MODE_PRIVATE);
+            String applicationPanHexadecimal = sharedPreferences.getString(mContext.getString(R.string.pan_var_name), "N/A");
+
+            if (!applicationPanHexadecimal.equals("N/A")) {
+                applicationPan = HexUtil.hexadecimalToBytes(applicationPanHexadecimal);
+
+                if (applicationPan != null) {
+                    try {
+                        mPaycardObject = realm.where(PaycardObject.class).equalTo(mContext.getString(R.string.pan_var_name), applicationPan).findFirst();
+                    } catch (Exception e) {
+                        LogUtil.e(TAG, e.getMessage());
+                        LogUtil.e(TAG, e.toString());
+
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        if (realm == null || mPaycardObject == null) {
+            if (realm == null) {
                 LogUtil.w(TAG, "Realm is null");
             }
             if (mPaycardObject == null) {
@@ -139,13 +138,6 @@ public class HostPaycardThread implements Runnable {
             this.cannotHostPaycard();
             return;
         }
-
-        /*Intent mPaymentHostApduServiceIntent = new Intent(mContext, PaymentHostApduService.class);
-        mPaymentHostApduServiceIntent.putExtra(mContext.getString(R.string.pan_var_name), mPaycardObject.getApplicationPan());
-
-        // Service(s)
-        mContext.startService(mPaymentHostApduServiceIntent);
-        // - Service(s)*/
         // - Thread relative
 
         // Finalize

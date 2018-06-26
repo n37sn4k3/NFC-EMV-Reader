@@ -1,11 +1,14 @@
 package com.viliyantrbr.nfcemvpayer.service;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
+import com.viliyantrbr.nfcemvpayer.thread.HostPaycardThread;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.KeyUtil;
@@ -15,6 +18,7 @@ import java.util.Arrays;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.Sort;
 
 public class PaymentHostApduService extends HostApduService {
     private static final String TAG = PaymentHostApduService.class.getSimpleName();
@@ -26,28 +30,6 @@ public class PaymentHostApduService extends HostApduService {
     public PaymentHostApduService() {
         // Required empty public constructor
     }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-        LogUtil.d(TAG, "\"" + TAG + "\": Service start command");
-
-        byte[] applicationPan = intent.getByteArrayExtra(getString(R.string.pan_var_name));
-
-        if (mRealm != null) {
-            try {
-                mPaycardObject = mRealm.where(PaycardObject.class).equalTo(getString(R.string.pan_var_name), applicationPan).findFirst();
-            } catch (Exception e) {
-                LogUtil.e(TAG, e.getMessage());
-                LogUtil.e(TAG, e.toString());
-
-                e.printStackTrace();
-            }
-        }
-
-        return START_STICKY_COMPATIBILITY;
-    }
-
 
     @Override
     public void onCreate() {
@@ -83,6 +65,38 @@ public class PaymentHostApduService extends HostApduService {
             }
         }
         // - Realm
+
+        byte[] applicationPan = null;
+        String applicationPanHexadecimal = null;
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        applicationPanHexadecimal = sharedPreferences.getString(getString(R.string.pan_var_name), "N/A");
+
+        if (!applicationPanHexadecimal.equals("N/A")) {
+            applicationPan = HexUtil.hexadecimalToBytes(applicationPanHexadecimal);
+        }
+
+        if (mRealm != null) {
+            if (applicationPan != null) {
+                try {
+                    mPaycardObject = mRealm.where(PaycardObject.class).equalTo(getString(R.string.pan_var_name), applicationPan).findFirst();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    mPaycardObject = mRealm.where(PaycardObject.class).sort("mAddDate", Sort.DESCENDING).findFirst();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, e.getMessage());
+                    LogUtil.e(TAG, e.toString());
+
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -285,7 +299,5 @@ public class PaymentHostApduService extends HostApduService {
                 LogUtil.w(TAG, "Deactivated: Deselected");
                 break;
         }
-
-        stopSelf();
     }
 }
