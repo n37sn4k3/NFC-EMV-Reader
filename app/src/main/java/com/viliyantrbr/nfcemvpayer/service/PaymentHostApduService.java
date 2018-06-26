@@ -88,7 +88,7 @@ public class PaymentHostApduService extends HostApduService {
                 }
             } else {
                 try {
-                    mPaycardObject = mRealm.where(PaycardObject.class).sort("mAddDate", Sort.DESCENDING).findFirst();
+                    mPaycardObject = mRealm.where(PaycardObject.class).sort(getString(R.string.add_date_var_name), Sort.DESCENDING).findFirst();
                 } catch (Exception e) {
                     LogUtil.e(TAG, e.getMessage());
                     LogUtil.e(TAG, e.toString());

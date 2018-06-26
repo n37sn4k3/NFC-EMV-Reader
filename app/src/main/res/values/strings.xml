@@ -65,6 +65,7 @@
     <string name="nfc_b">NFC B</string>
 
     <string name="pan_var_name">mApplicationPan</string>
+    <string name="add_date_var_name">mAddDate</string>
 
     <!-- EMV Specification Abbreviations & Terms -->
     <string name="pse">PSE (Payment System Environment)</string>
