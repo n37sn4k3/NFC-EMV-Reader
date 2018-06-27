@@ -39,7 +39,7 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 ## Additional repositories
 No additional Ant/Gradle/Maven repositories used.
 
-## Manifest permission(s) / Also runtime requested on API 23+ /
+## Manifest permission(s) / Also runtime requested on 6.0+ (API 23+) /
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.viliyantrbr.nfcemvpayer"
