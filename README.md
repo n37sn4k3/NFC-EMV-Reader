@@ -2,6 +2,20 @@
 (Unreleased, In Development) Android Java written application which reads and extracts contactless EMV paycard data using NFC, stores it into an encrypted Realm database, and emulates it to a payment terminal.
 
 ## Screenshots
+<h4>Screenshots of current version</h4>
+
+<img src="https://i.imgur.com/dvyHW5g.png" witdh="280" /> <img src="https://i.imgur.com/gg83c0x.png" width="280" /> <img
+src="https://i.imgur.com/mphSO7B.png" width="280" />
+
+<img src="https://i.imgur.com/kSQDSbb.png" width="280" /> <img src="https://i.imgur.com/6BIDYi9.png" width="280" /> <img
+src="https://i.imgur.com/GEJafBq.png" width="280" />
+
+<img src="https://i.imgur.com/oldZPB7.png" width="280" /> <img src="https://i.imgur.com/TqGANSd.png" width="280" />
+
+<hr />
+
+<h4>Screenshots of previous version</h4>
+
 <img src="https://i.imgur.com/1JRuH8e.png" width="280" /> <img src="https://i.imgur.com/r5wuVcH.png" width="280" /> <img src="https://i.imgur.com/VMAMoHP.png" width="280" />
 
 <img src="https://i.imgur.com/1pAQvwc.png" width="280" /> <img src="https://i.imgur.com/OjrmDOK.png" width="280" />
