@@ -4,8 +4,7 @@
 ## Screenshots
 <h4>Screenshots of current version</h4>
 
-<img src="https://i.imgur.com/dvyHW5g.png" witdh="280" /> <img src="https://i.imgur.com/gg83c0x.png" width="280" /> <img
-src="https://i.imgur.com/mphSO7B.png" width="280" />
+<img src="https://i.imgur.com/dvyHW5g.png" width="280" /> <img src="https://i.imgur.com/gg83c0x.png" width="280" /> <img src="https://i.imgur.com/mphSO7B.png" width="280" />
 
 <img src="https://i.imgur.com/kSQDSbb.png" width="280" /> <img src="https://i.imgur.com/6BIDYi9.png" width="280" /> <img
 src="https://i.imgur.com/GEJafBq.png" width="280" />
