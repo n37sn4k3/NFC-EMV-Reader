@@ -295,13 +295,13 @@ public class PaycardActivity extends AppCompatActivity {
 
         // Type (text)
         if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000041010)) {
-            mPaycardTypeTextView.setText("Mastercard (PayPass)");
+            mPaycardTypeTextView.setText(getString(R.string.mastercard));
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000043060)) {
-            mPaycardTypeTextView.setText("Maestro (PayPass)");
+            mPaycardTypeTextView.setText(getString(R.string.maestro));
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000031010)) {
-            mPaycardTypeTextView.setText("Visa (PayWave)");
+            mPaycardTypeTextView.setText(getString(R.string.visa));
         } else if (Arrays.equals(mPaycardObject.getAid(), AidUtil.A0000000032010)) {
-            mPaycardTypeTextView.setText("Visa Electron (PayWave)");
+            mPaycardTypeTextView.setText(getString(R.string.visa_electron));
         } else {
             mPaycardTypeTextView.setText("Type: N/A");
         }

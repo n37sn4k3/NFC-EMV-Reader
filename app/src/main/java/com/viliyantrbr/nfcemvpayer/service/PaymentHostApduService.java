@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.viliyantrbr.nfcemvpayer.R;
 import com.viliyantrbr.nfcemvpayer.object.PaycardObject;
-import com.viliyantrbr.nfcemvpayer.thread.HostPaycardThread;
 import com.viliyantrbr.nfcemvpayer.util.GpoUtil;
 import com.viliyantrbr.nfcemvpayer.util.HexUtil;
 import com.viliyantrbr.nfcemvpayer.util.KeyUtil;

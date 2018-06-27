@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Mastercard (PayPass)" />
+                android:text="@string/mastercard" />
 
             <ImageView
                 android:id="@+id/item_paycard_type_mastercard_image"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Maestro (PayPass)" />
+                android:text="@string/maestro" />
 
             <ImageView
                 android:id="@+id/item_paycard_type_maestro_image"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Visa (PayWave)" />
+                android:text="@string/visa" />
 
             <ImageView
                 android:id="@+id/item_paycard_type_visa_image"
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Visa Electron (PayWave)" />
+                android:text="@string/visa_electron" />
 
             <ImageView
                 android:id="@+id/item_paycard_type_visa_electron_image"

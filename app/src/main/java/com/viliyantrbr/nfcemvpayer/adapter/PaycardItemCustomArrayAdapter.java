@@ -111,13 +111,13 @@ public class PaycardItemCustomArrayAdapter extends ArrayAdapter<PaycardObject> {
 
             // Type (text)
             if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000041010)) {
-                viewHolder.paycardTypeTextView.setText("Mastercard (PayPass)");
+                viewHolder.paycardTypeTextView.setText(convertView.getContext().getString(R.string.mastercard));
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000043060)) {
-                viewHolder.paycardTypeTextView.setText("Maestro (PayPass)");
+                viewHolder.paycardTypeTextView.setText(convertView.getContext().getString(R.string.maestro));
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000031010)) {
-                viewHolder.paycardTypeTextView.setText("Visa (PayWave)");
+                viewHolder.paycardTypeTextView.setText(convertView.getContext().getString(R.string.visa));
             } else if (Arrays.equals(paycardObject.getAid(), AidUtil.A0000000032010)) {
-                viewHolder.paycardTypeTextView.setText("Visa Electron (PayWave)");
+                viewHolder.paycardTypeTextView.setText(convertView.getContext().getString(R.string.visa_electron));
             } else {
                 viewHolder.paycardTypeTextView.setText("Type: N/A");
             }

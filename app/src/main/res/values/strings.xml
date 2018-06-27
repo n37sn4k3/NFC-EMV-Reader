@@ -88,6 +88,13 @@
     <string name="cdol_2">CDOL2 (Card Risk Management Data Object List 2)</string>
     <!-- - EMV Specification Abbreviations & Terms -->
 
+    <!-- Supported Paycards -->
+    <string name="mastercard">Mastercard (PayPass)</string>
+    <string name="maestro">Maestro (PayPass)</string>
+    <string name="visa">Visa (PayWave)</string>
+    <string name="visa_electron">Visa Electron (PayWave)</string>
+    <!-- - Supported Paycards -->
+
     <string name="close">Close</string>
 
     <string name="added">Added</string>
