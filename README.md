@@ -45,6 +45,9 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 * Realm Mobile Database Version: 5.3.0
 * IDE used for development: Android Studio (recommended)
 
+## Additional repositories
+No additional Ant/Gradle/Maven repositories used.
+
 ## Manifest permission(s) / Also runtime requested /
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
