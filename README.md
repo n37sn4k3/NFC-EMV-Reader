@@ -41,9 +41,7 @@ No additional Ant/Gradle/Maven repositories used.
 
 ## Manifest permission(s) (Also runtime requested on 6.0+ (API 23+))
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.viliyantrbr.nfcemvpayer"
-    android:installLocation="internalOnly">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.NFC" />
 
@@ -64,6 +62,7 @@ No additional Ant/Gradle/Maven repositories used.
 ## Manifest requirement(s)
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    
     <uses-feature
          android:name="android.hardware.nfc"
          android:required="true" />
