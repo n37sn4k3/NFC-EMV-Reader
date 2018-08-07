@@ -61,12 +61,9 @@ No additional Ant/Gradle/Maven repositories used.
     <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>
 
-## Manifest feature(s)
+## Manifest requirement(s)
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.viliyantrbr.nfcemvpayer"
-    android:installLocation="internalOnly">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-feature
          android:name="android.hardware.nfc"
          android:required="true" />
