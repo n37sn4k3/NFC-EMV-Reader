@@ -117,7 +117,7 @@ public class ReadPaycardConstsHelper {
             (byte) 0x9F,
             (byte) 0x4D
     }, PAYWAVE_LOG_ENTRY_TLV_TAG = {
-            (byte) 0x9F,
+            (byte) 0xDF,
             (byte) 0x60
     }; // PayPass, PayWave
     // - Log Entry
