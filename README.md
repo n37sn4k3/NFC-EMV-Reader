@@ -1,5 +1,5 @@
 # NFC-EMV-Payer
-(Unreleased, In Development) Android Java written application which reads and extracts contactless EMV paycard data using NFC, stores it into an encrypted Realm database, and emulates it to a payment terminal.
+Android Java written application which reads and extracts contactless EMV paycard data using NFC and stores it into a Realm database.
 
 ## Screenshots
 
@@ -11,8 +11,13 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 <img src="https://i.imgur.com/oldZPB7.png" width="280" /> <img src="https://i.imgur.com/TqGANSd.png" width="280" />
 
 ## Application Features
-* Paycard read **(In Development, Almost Ready)**
-* Paycard host (emulation) **(In Development, Almost Ready)**
+* Read, store & manage multiple payment cards
+* View accessible application data & records
+* Extract sensitive payment cards information
+• View "Track 1" & "Track 2" data (which is most actively used in payment card processing)
+* Take a look at the last made transactions (not extracted in the source code)
+
+### Additional
 * Encrypted multiple paycards storing (Realm)
 
 ## Supported EMV Paycards
@@ -20,6 +25,9 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 * Maestro (PayPass); AID: A0000000043060
 * Visa (PayWave); AID: A0000000031010
 * Visa Electron (PayWave); AID: A0000000032010
+
+###
+* More cards are supported in the Google Play app
 
 ## Device Requirements
 * Android 4.4+ (API 19+)
@@ -68,8 +76,8 @@ No additional Ant/Gradle/Maven repositories used.
          android:required="true" />
 </manifest>
 
-## APK
-Unreleased, In Development
+## APK (Google Play)
+https://play.google.com/store/apps/details?id=com.pxdworks.nfcemvreader
 
 ## License
 This project is released under the The GNU General Public License v3.0. See "LICENSE" file for further information.
