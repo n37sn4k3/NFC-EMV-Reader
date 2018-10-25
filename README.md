@@ -27,13 +27,12 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 * Visa Electron (PayWave); AID: A0000000032010
 
 ###
-* More cards are supported in the Google Play app
+* More cards are supported in the Google Play application
 
 ## Device Requirements
 * Android 4.4+ (API 19+)
 * NFC hadrware feature (Manifest required)
 * NFC feature (for "Paycard read" feature)
-* HCE feature (for "Paycard host (emulation)" feature)
 
 ## Technical information
 * Compile SDK Version: 28
