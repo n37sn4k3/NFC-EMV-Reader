@@ -1,4 +1,4 @@
-# NFC-EMV-Payer
+# NFC-EMV-Reader
 Android Java written application which reads and extracts contactless EMV paycard data using NFC and stores it into a Realm database.
 
 ## Screenshots
