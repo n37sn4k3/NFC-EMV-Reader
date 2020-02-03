@@ -36,7 +36,7 @@ src="https://i.imgur.com/GEJafBq.png" width="280" />
 
 ## Device Requirements
 * Android 4.4+ (API 19+)
-* NFC hadrware feature (Manifest required)
+* NFC hardware feature (Manifest required)
 * NFC feature (for "Paycard read" feature)
 
 ## Technical information
